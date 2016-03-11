@@ -1,0 +1,25 @@
+<ion-view view-title="Forgot Password">
+  <ion-pane>
+    <ion-header-bar>
+      <button class="button button-icon icon ion-home"></button>
+      <h1 class="title">Security Page</h1>
+      </div>
+    </ion-header-bar>
+    <ion-content padding="true">
+      <div class="list">
+        <h3 class="title">Answer the following Security Question</h3>
+        <div class="list">
+        <h4 style="color:blue">{{mySecurityQuestion}}</h4>
+          </div>
+        <label class="item item-input">
+           <input type="text" id="answer" class="form-control" placeholder="Enter your answer" required autofocus ng-model="answer">
+         </label>
+      <!-- <label class="item item-input item-stacked-label">
+           <span class="input-label" id="question2" >Question2</span>
+           <input type="text" placeholder="Answer2" ng-model="answer2">
+         </label>-->
+        <button class="button button-block button-positive" ng_click="securityAnswer(answer)" type="submit">Submit Answer</button>
+      </div>
+    </ion-content>
+  </ion-pane>
+</ion-view>

@@ -1,0 +1,20 @@
+
+     <ion-header-bar>
+         <div>
+              <button class="button button-icon icon ion-home" ng-click="home()"></button>
+            <h1 align="center" class="title">Update Profile</h1>
+         
+            <button align='left'class="button button-clear button-positive" ng-click="logout()">Logout</button>
+         </div>
+        </ion-header-bar>
+  <ion-content>
+     <div align="center" class="rows">
+         <input type="text" id="user" class="form-control" placeholder="Enter new Username" 
+                required autofocus ng-model="username">
+              <input type="text" id="user" class="form-control" placeholder="Enter new Password" 
+                required autofocus ng-model="password">
+          <input type="text" id="user" class="form-control" placeholder="Enter new Email" 
+                required autofocus ng-model="email">
+    <button class="button button-block button-positive padding-horizontal" ng-click="update(username,password,email)">Update Profile</button>
+            </div>
+  </ion-content>
