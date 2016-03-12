@@ -2,9 +2,17 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+<<<<<<< HEAD
+=======
+      <sourceFolder url="file://$MODULE_DIR$/www/test" isTestSource="true" />
+>>>>>>> sc9v9_1
       <excludeFolder url="file://$MODULE_DIR$/platforms" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+=======
+    <orderEntry type="library" name="StudentCompanion node_modules" level="project" />
+>>>>>>> sc9v9_1
   </component>
 </module>
