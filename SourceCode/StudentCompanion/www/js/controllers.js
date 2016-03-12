@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+.controller('AppCtrl', function($scope, $ionicModal, $http, $timeout, $state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -25,8 +25,8 @@ angular.module('starter.controllers', [])
   };
 
   // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
+  $scope.logout = function() {
+    $state.go('login');
   };
 
   // Perform the login action when the user submits the login form
@@ -53,6 +53,74 @@ angular.module('starter.controllers', [])
 })
     .controller('HomeCtrl', function($scope, $stateParams) {
     $scope.welcome = "Welcome to Student Companion";
+    })
+
+  .controller('LoginCtrl', function($scope, $state, $http, $window, $httpParamSerializerJQLike, $timeout) {
+
+    $scope.loginData = {};
+
+    $scope.doLogin = function(sso, password) {
+      console.log('Doing login', $scope.loginData);
+
+      // $scope.data = {};
+      var count=0;
+      var remcount=3;
+      var flag=1;
+      $scope.pageClass = 'home';
+      $scope.home = function() {
+        console.log("home page !");
+        $state.go('home');
+      }
+      $scope.pageClass = 'login';
+     // $scope.login = function(username, password) {
+        //console.log("inside login function");
+        //inside.getMethod();
+        $http({
+          method: 'GET',
+          url: 'https://api.mongolab.com/api/1/databases/studentcompaniondb/collections/Login?apiKey=PPjxva2p9SH3NomyxSQ6rdwiofOu1q2L',
+          contentType: "application/json"
+        }).success(function (response) {
+          var list = response;
+
+          for (var i = 0; i < list.length; i++) {
+            if (angular.equals(list[i].SSO, sso) && angular.equals(list[i].Password, password)) {
+
+              localStorage.setItem("username", list[i].SSO);
+              localStorage.setItem("password", list[i].Password);
+              console.log("inside if loop");
+              flag = 0;
+              $state.go('app.home');
+
+            } else {
+              //alert("Incorrect username/password");
+              console.log("inside else loop");
+              count++;
+            }
+          }
+
+          if (count == list.length) {
+            // alert("hiii");
+            /*  remcount--;
+             alert("Attempts remaining  "+remcount);
+             if(remcount==0){
+             alert("Please try again");
+             $window.close();
+
+             ionic.Platform.exitApp();
+             }*/
+            $state.go('login');
+            document.getElementById('x').innerHTML = "<p><h3>Invalid Credentials! Please try again....</h3></p>";
+          }
+        })
+
+    //  }
+      // Simulate a login delay. Remove this and replace with your login
+      // code if using a login system
+      //$timeout(function() {
+      //  $state.go('app.search');
+      //}, 1000);
+    };
+
     })
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 });
