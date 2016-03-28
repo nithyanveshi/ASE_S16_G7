@@ -1,0 +1,4 @@
+ID,CourseID,CourseName,Semester,Year,Professor,CourseDays,CourseHours
+1,CS5551,Advanced Software Engineering,Spring,2016,Lee,"3,5",11:30-12:45
+2,CS5552A,Formal Software Specification,Spring,2016,Han,"2,4",17:30-18:45
+3,CSEE5110,Network Architecture I,Spring,2016,Choi,"3,5",14:30-15:45
