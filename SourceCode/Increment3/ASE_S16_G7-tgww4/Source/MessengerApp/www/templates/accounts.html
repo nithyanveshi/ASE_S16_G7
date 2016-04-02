@@ -1,0 +1,52 @@
+<ion-header-bar>
+  <button class="button button-icon icon ion-home" ng-click="home()">Home</button>
+  <h1 class="title">Add Accounts</h1>
+  <button class="button button-clear button-positive" ng-click="logout()">Logout</button>
+  </div>
+</ion-header-bar>
+<ion-content class="has-header padding">
+
+  <ul class="list">
+
+    <li class="item item-toggle">
+      LinkedIn
+      <label class="toggle toggle-assertive">
+        <input type="checkbox" ng-model="vm.myChkModel" ng-change="vm.myClick(vm.myChkModel)">
+        <div class="track">
+          <div class="handle"></div>
+        </div>
+      </label>
+    </li>
+    <li class="item item-toggle">
+      Twitter
+      <label class="toggle toggle-assertive">
+        <input type="checkbox" ng-model="vm.myChkModeltwitter" ng-change="vm.myClicktwitter(vm.myChkModeltwitter)">
+        <div class="track">
+          <div class="handle"></div>
+        </div>
+      </label>
+    </li>
+    <li class="item item-toggle">
+      Facebook
+      <label class="toggle toggle-assertive">
+        <input type="checkbox" ng-model="vm.myChkModelfb" ng-change="vm.myClickfb(vm.myChkModelfb)">
+        <div class="track">
+          <div class="handle"></div>
+        </div>
+      </label>
+    </li>
+    <li class="item item-toggle">
+      Instagram
+      <label class="toggle toggle-assertive">
+        <input type="checkbox" ng-model="vm.myChkModelinsta" ng-change="vm.myClickinsta(vm.myChkModelinsta)">
+        <div class="track">
+          <div class="handle"></div>
+        </div>
+      </label>
+    </li>
+
+
+
+  </ul>
+
+</ion-content>

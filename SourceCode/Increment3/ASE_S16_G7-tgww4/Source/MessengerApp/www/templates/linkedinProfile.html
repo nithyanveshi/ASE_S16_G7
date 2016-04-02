@@ -1,0 +1,33 @@
+<ion-header-bar>
+  <button class="button button-icon icon ion-home" ng-click="home()">Home</button>
+  <h1 class="title">LinkedIn Profile</h1>
+  <button class="button button-clear button-positive" ng-click="logout()">Logout</button>
+  </div>
+</ion-header-bar>
+<ion-content padding="true">
+
+  <div>
+
+
+    <img ng-src="{{linkedin_imgconndata.pictureUrl}}"/>
+    <button class="button button-clear button-royal">{{linkedin_data.firstName+' '+linkedin_data.lastName}}</button>
+   <!-- <h2>{{linkedin_data.firstName+' '+linkedin_data.lastName}}</h2>
+    <h3>{{linkedin_data.headline}}</h3>-->
+    <div >
+      <h5 >{{linkedin_data.headline}}</h5>
+    </div>
+
+    <div>
+      <h5>Profile ID:{{linkedin_data.id}}</h5>
+    <h5>Connections:{{linkedin_imgconndata.numConnections}}</h5>
+   </div>
+
+     <button class="button button-block button-positive padding-horizontal" ng_click="hreflink()">
+     Go To LinkedIn Profile
+    </button>
+
+
+  </div>
+
+
+</ion-content>

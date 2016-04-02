@@ -1,0 +1,17 @@
+<ion-view view-title="Reserve a room">
+ 
+  <ion-content>
+    <div ng-controller="LibraryCtrl">
+      <div>
+        <h5>Library Name: {{libDetails.LibraryName}}</h5>
+        <h6>{{libDetails.Address1}}</h6>
+        <h6>{{libDetails.City}}, {{libDetails.State}}, {{libDetails.ZIP}}</h6>
+        <h6>{{libDetails.Phone}}</h6>
+      </div>
+      <div collection-repeat="item in items">
+        <h4>{{item}}</h4>
+      </div>
+      <div class="simple-button" ng-click="change()">click me!</div>
+    </div>
+  </ion-content>
+</ion-view>

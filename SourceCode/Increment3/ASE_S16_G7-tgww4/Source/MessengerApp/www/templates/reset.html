@@ -1,0 +1,23 @@
+<ion-view view-title="Reset Password">
+  <ion-pane>
+    <ion-header-bar>
+      <button class="button button-icon icon ion-home"></button>
+      <h1 class="title">Reset Password</h1>
+      <button class="button button-clear button-positive" ng-click="logout()">Logout</button>
+      </div>
+    </ion-header-bar>
+    <ion-content padding="true">
+
+      <div class="list">
+        <label class="item item-input">
+          <input type="password" id="password" class="form-control" placeholder="Enter new password" required autofocus ng-model="password">
+        </label>
+        <label class="item item-input">
+          <input type="password" id="cpassword" class="form-control" placeholder="Confirm Password" required autofocus ng-model="cpassword">
+        </label>
+        <button class="button button-block button-positive padding-horizontal"  ng-click="reset(password,cpassword)">Reset Password</button>
+      </div>
+      <div id="x"></div>
+    </ion-content>
+  </ion-pane>
+</ion-view>

@@ -1,0 +1,18 @@
+<ion-view view-title="Forgot Password">
+  <ion-pane>
+    <ion-header-bar>
+      <button class="button button-icon icon ion-home" ng_click="home()"></button>
+
+      <h1 class="title">Forgot Password</h1>
+    </ion-header-bar>
+    <ion-content padding="true">
+      <div class="list">
+        <h3 class="title">Identify yourself...</h3>
+        <label class="item item-input">
+          <input type="text" id="username" class="form-control" placeholder="Enter Username" required autofocus ng-model="username">
+        </label>
+        <button class="button button-block button-positive" ng_click="submitAnswer(username)" type="submit">Submit Answer</button>
+      </div>
+    </ion-content>
+  </ion-pane>
+</ion-view>

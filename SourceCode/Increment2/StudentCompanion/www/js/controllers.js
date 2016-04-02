@@ -27,6 +27,7 @@ angular.module('starter.controllers', [])
   // Open the login modal
   $scope.logout = function() {
     $state.go('login');
+    document.getElementById('x').innerHTML = "";
   };
 
   // Perform the login action when the user submits the login form
@@ -90,7 +91,7 @@ angular.module('starter.controllers', [])
               console.log("inside if loop");
               flag = 0;
               $state.go('app.home');
-
+              break;
             } else {
               //alert("Incorrect username/password");
               console.log("inside else loop");
