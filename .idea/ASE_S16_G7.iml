@@ -4,6 +4,7 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment1/StudentCompanion/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment2/StudentCompanion/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/ASE_S16_G7-tgww4/Source/StudentCompanion/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/StudentCompanion/platforms" />
     </content>
     <orderEntry type="inheritedJdk" />

@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 
 
 
-var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library']);
+var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library', 'LibraryRooms']);
 
 var server = restify.createServer();
 
@@ -101,9 +101,49 @@ server.post('/library', function (req, res, next) {
 
 
 
+server.post('/libRoomsList', function (req, res, next) {
 
-server.listen(3000, function () {
-    console.log("Server started @ 3000");
+
+  var user = req.params;
+  if (req.params.SSO.trim().length == 0) {
+    console.log("Inside if loop");
+    res.writeHead(403, {
+      'Content-Type': 'application/json; charset=utf-8'
+    });
+    res.end(JSON.stringify({
+      error: "Error in mServer.js for Library rooms details fetch"
+    }));
+  }
+  else {
+    console.log("Inside Library Rooms Server " + user.SSO);
+    db.LibraryRooms.find(function (err, data) {
+      if(err) {
+        res.writeHead(403, {
+          'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+          error: "Error occured during Library Room details fetch"
+        }));
+        console.log("Server: Library Room details fetch error");
+      }
+      else {
+        res.writeHead(200, {
+          'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify(data));
+        console.log("Server: Success Library Rooms fetch");
+      }
+    });
+  }
+
+  //console.log("User found: " + Login, null, '\t');
+
+  return next();
+});
+
+
+server.listen(9000, function () {
+    console.log("Server started @ 9000");
 });
 
 

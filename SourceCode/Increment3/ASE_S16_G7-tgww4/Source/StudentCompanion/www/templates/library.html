@@ -1,17 +1,68 @@
 <ion-view view-title="Reserve a room">
- 
+  <ion-nav-buttons side="right" ng-show="false">
+    <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
     <div ng-controller="LibraryCtrl">
       <div>
-        <h5>Library Name: {{libDetails.LibraryName}}</h5>
+        <h5>{{libDetails.LibraryName}}</h5>
         <h6>{{libDetails.Address1}}</h6>
         <h6>{{libDetails.City}}, {{libDetails.State}}, {{libDetails.ZIP}}</h6>
         <h6>{{libDetails.Phone}}</h6>
       </div>
-      <div collection-repeat="item in items">
-        <h4>{{item}}</h4>
+
+      <ion-card>
+        <ion-card-header>
+          <div class="row">
+            <div class="col col-50"><strong>Room Number</strong></div>
+            <div class="col"><strong>Capacity</strong></div>
+            <div class="col"><strong>Projector</strong></div>
+          </div>
+        </ion-card-header>
+        <ion-list>
+          <ion-item collection-repeat="room in libRoomsDetails">
+            <ion-card>
+            <div class="row">
+              <div class="col col-50">{{room.RoomNumber}}</div>
+              <div class="col">{{room.Capacity}}</div>
+              <div ng-switch on="room.Projector">
+                <div ng-switch-when="0">
+                  <div class="col">Not Available</div>
+                </div>
+                <div ng-switch-when="1">
+                  <div class="col">Available</div>
+                  </div>
+                </div>
+              <button class="button button-small button-balanced" ng-click="reserveRoom(room._id)">
+                Reserve
+              </button>
+              </div>
+            </ion-card>
+          </ion-item>
+        </ion-list>
+      </ion-card>
+      <!--<div class="row header">-->
+        <!--<div class="col col-50">Room Number</div>-->
+        <!--<div class="col">Capacity</div>-->
+        <!--<div class="col">Projector</div>-->
       </div>
-      <div class="simple-button" ng-click="change()">click me!</div>
-    </div>
+      <!--<ion-item collection-repeat="room in libRoomsDetails">-->
+        <!--<div class="row">-->
+          <!--<div class="col col-50 left">{{room.RoomNumber}}</div>-->
+          <!--<div class="col center">{{room.Capacity}}</div>-->
+          <!--<div class="col center">{{room.Projector}}</div>-->
+          <!--<ion-option-button class="button-positive"-->
+                             <!--ng-click="reserveRoom(room._id)">-->
+        <!--</div>-->
+
+      <!--</ion-item>-->
+
+    <!--</div>-->
+      <!--<div collection-repeat="item in items">-->
+        <!--<h4>{{item}}</h4>-->
+      <!--</div>-->
+      <!--<div class="simple-button" ng-click="change()">click me!</div>-->
+    <!---->
   </ion-content>
 </ion-view>

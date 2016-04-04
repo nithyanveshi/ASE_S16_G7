@@ -1,3 +1,17 @@
+.row:nth-child(odd) {
+    background-color: #CCC;
+
+}
+
+.row:nth-child(even) {
+
+  background-color: white;
+
+}
+
+.col {
+    folat: center;
+}
 *, *:before, *:after {
   box-sizing: border-box;
   margin: 0;
@@ -530,7 +544,7 @@ input, button {
 
 body {   
     font-family: arial;
-	font-size:;
+	font-size:14px;
 }
 
 table {

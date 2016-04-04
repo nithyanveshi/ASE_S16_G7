@@ -25,6 +25,7 @@ angular.module('starter.controllers', ['starter.services'])
 
   // Open the login modal
   $scope.logout = function() {
+    localStorage.setItem("token", "");
     $state.go('login');
   };
 
@@ -108,7 +109,7 @@ angular.module('starter.controllers', ['starter.services'])
           $rootScope.hide();
           $rootScope.notify("Invalid Username or password");
             $state.go('login');
-            document.getElementById('x').innerHTML = "<p><h3>Invalid Credentials! Please try again later....</h3></p>";
+            document.getElementById('x').innerHTML = "<p><h5><strong>Invalid Credentials! Please try again later....</strong></h5></p>";
         });
       // $scope.data = {};
      // var count=0;
@@ -184,20 +185,47 @@ angular.module('starter.controllers', ['starter.services'])
 
             }
             else {
-                console.log("Error Occured");
+                console.log("LibraryCtrl: Error Occured");
                 $rootScope.hide();
-                $rootScope.notify("Error Occured");
+                $rootScope.notify("LibraryCtrl: Error Occured");
                 $state.go('app.home');
 
             }
 
         }).error(function (error) {
-            console.log("Something went fishy");
+            console.log("LibraryCtrl: Something went fishy");
             $rootScope.hide();
-            $rootScope.notify("Duh, we broke");
+            $rootScope.notify("LibraryCtrl: Duh, we broke");
             $state.go('app.home');
         });
+      API.getLibRoomsList({
+        SSO: SSO
+      }).success(function (data) {
+          if(data != null) {
+            console.log("LibraryCtrl: Valid Lib Rooms details");
+            $scope.libRoomsDetails = data;
+            $rootScope.hide();
 
+          }
+          else {
+            console.log("LibraryCtrl: Error Occured");
+            $rootScope.hide();
+            $rootScope.notify("LibraryCtrl: Error Occured");
+            $state.go('app.home');
+
+          }
+
+        }).error(function (error) {
+        console.log("LibraryCtrl: Something went fishy for getLibRoomsList");
+        $rootScope.hide();
+        $rootScope.notify("LibraryCtrl: Duh, we broke");
+        $state.go('app.home');
+      });
+
+      $scope.reserveRoom = function(id) {
+        console.log("Reserving room with ID: " + id);
+
+      }
 
       $scope.indexToShow = 0;
       $scope.items = [];
