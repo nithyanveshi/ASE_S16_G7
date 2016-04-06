@@ -1,0 +1,18 @@
+<ion-view view-title="Labs">
+  <ion-nav-buttons side="right" ng-show="false">
+    <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+	<h1>Labs</h1>
+    <div ng-controller="LabsCtrl">
+		<div>
+			<ul>
+				<li ng-repeat="x in labDetails">
+				{{ x.LabName }}
+				</li>
+			</ul>
+		</div>
+	</div>
+  </ion-content>
+</ion-view>
