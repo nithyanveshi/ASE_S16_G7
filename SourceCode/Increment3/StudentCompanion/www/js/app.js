@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers',])
+angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'ionic-datepicker'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -45,19 +45,61 @@ angular.module('starter', ['ionic', 'starter.controllers',])
                     }
                 }
             })
-            .state('app.profile', {
-                url: '/profile',
+	    
+	    .state('app.labs', {
+                url: '/labs',
                 views: {
                     'menuContent': {
-                        templateUrl: 'templates/profile.html'
+                        templateUrl: 'templates/labs.html',
+                        controller: 'LabsCtrl'
                     }
                 }
             })
+		.state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html',
+      controller: 'RegisterCtrl'
+  })
+		.state('app.contactus', {
+                url: '/contactus',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/contactus.html'
+                    }
+                }
+            })
+            .state('app.profile', {
+						url: '/profile', 
+				views:{
+                    'menuContent':{
+				     templateUrl: 'templates/profile.html',
+						controller: 'ProfileCtrl'
+						}
+					}
+                })
             .state('app.library', {
                 url: '/library',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/library.html',
+                        controller: 'LibraryCtrl'
+                    }
+                }
+            })
+            .state('app.roomReserve', {
+                url: '/roomReserve',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/roomReserve.html',
+                        controller: 'LibraryCtrl'
+                    }
+                }
+            })
+            .state('app.reservedRooms', {
+                url: '/reservedRooms',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/reservedRooms.html',
                         controller: 'LibraryCtrl'
                     }
                 }
@@ -80,7 +122,15 @@ angular.module('starter', ['ionic', 'starter.controllers',])
                     }
                 }
             })
-
+			.state('app.samenu', {
+                url: '/samenu',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/samenu.html',
+                        controller: 'SamenuCtrl'
+                    }
+                }
+            })
             .state('app.single', {
                 url: '/playlists/:playlistId',
                 views: {
