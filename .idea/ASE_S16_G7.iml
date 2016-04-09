@@ -9,6 +9,10 @@
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/ASE_S16_G7-tgww4/Source/StudentCompanion/node_modules/cordova/node_modules/cordova-lib/src/plugman/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/ASE_S16_G7-tgww4/Source/StudentCompanion/node_modules/cordova/node_modules/cordova-lib/templates/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/ASE_S16_G7-tgww4/Source/StudentCompanion/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/StudentCompanion/node_modules/cordova/node_modules/cordova-lib/src/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/StudentCompanion/node_modules/cordova/node_modules/cordova-lib/src/plugman/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/StudentCompanion/node_modules/cordova/node_modules/cordova-lib/templates/platforms" />
+      <excludeFolder url="file://$MODULE_DIR$/SourceCode/Increment3/StudentCompanion/platforms" />
       <excludeFolder url="file://$MODULE_DIR$/SourceCode/StudentCompanion/platforms" />
     </content>
     <orderEntry type="inheritedJdk" />

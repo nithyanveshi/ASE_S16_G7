@@ -3,8 +3,8 @@
  */
 angular.module('starter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
-        var base = "http://ec2-52-34-188-157.us-west-2.compute.amazonaws.com";
-      //var base = "http://localhost:9000";
+        //var base = "http://ec2-52-34-188-157.us-west-2.compute.amazonaws.com";
+      var base = "http://localhost:9000";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
                 content: text ? text : 'Loading',
