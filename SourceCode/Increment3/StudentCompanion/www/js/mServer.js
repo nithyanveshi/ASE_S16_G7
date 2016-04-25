@@ -139,6 +139,7 @@ server.post('/libRoomsList', function (req, res, next) {
 
 
   var user = req.params;
+
   if (req.params.SSO.trim().length == 0) {
     console.log("Inside if loop");
     res.writeHead(403, {
@@ -179,8 +180,11 @@ server.post('/roomReserveList', function (req, res, next) {
 
 
     var user = req.params;
+    var query = {};
+    query["StartTime"] = new Date(user.selectedDate);
+    //var selectedDate = req.params.selectedDate;
     if (req.params.SSO.trim().length == 0) {
-        console.log("Inside if loop");
+        console.log("SSO is not set in roomReserveList");
         res.writeHead(403, {
             'Content-Type': 'application/json; charset=utf-8'
         });
@@ -190,7 +194,7 @@ server.post('/roomReserveList', function (req, res, next) {
     }
     else {
         console.log("Inside Reserve Rooms Server " + user.SSO);
-        db.RoomReservation.find(function (err, data) {
+        db.RoomReservation.find(query, function (err, data) {
             if(err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -205,7 +209,7 @@ server.post('/roomReserveList', function (req, res, next) {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
                 res.end(JSON.stringify(data));
-                console.log("mServer.js: Success reserve Rooms fetch");
+                console.log("mServer.js: Success reserve Rooms fetch" + data);
             }
         });
     }

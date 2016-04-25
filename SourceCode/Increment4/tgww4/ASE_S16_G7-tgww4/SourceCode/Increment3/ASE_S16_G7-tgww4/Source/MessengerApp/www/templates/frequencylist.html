@@ -1,0 +1,23 @@
+<ion-header-bar>
+  <button class="button button-icon icon ion-home" ng-click="home()">Home</button>
+  <h1 class="title">Add Accounts</h1>
+  <button class="button button-clear button-positive" ng-click="logout()">Logout</button>
+  </div>
+</ion-header-bar>
+<ion-content class="has-header padding">
+
+  <div ng-repeat="entry in home_timeline" class="list card">
+    <div class="item item-avatar">
+      <img ng-src="{{entry.user.profile_image_url}}"/>
+      <h2>{{entry.user.name}}</h2>
+      <p>{{correctTimestring(entry.created_at) | date:'medium'}}</p>
+    </div>
+
+    <div class="item item-body">
+      <p ng-bind-html="entry.text"></p>
+      <img ng-if="entry.extended_entities" ng-src="{{ entry.extended_entities.media[0].media_url }}" style="width: 100%;"/>
+    </div>
+
+  </div>
+
+</ion-content>

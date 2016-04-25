@@ -61,8 +61,12 @@ angular.module('starter.services', [])
                 //    }
                 //});
             },
+            getHolidays: function (form) {
+                console.log("services.js: SSO from getHolidays: " + form.SSO);
+                return $http.post(base+'/getHolidays', form);
+            },
 			getProfileDetails: function(form){
-				console.log("SSO from services.js" + form.SSO);
+				console.log("services.js: SSO from getProfileDetails: " + form.SSO);
 				return $http.post(base+'/profile', form);//,{
                   //  method : 'GET',
                     //    params:{
@@ -79,6 +83,14 @@ angular.module('starter.services', [])
             //    }
             //});
           },
+            cacheUserProfile: function (form) {
+                console.log("services.js: SSO from cacheUserProfile: " + form.SSO);
+                return $http.post(base+'/cacheUserProfile', form);
+            },
+            newRoomReservation: function (form) {
+                console.log("services.js: SSO from newRoomReservation: " + form.Login_ID);
+                return $http.post(base+'/newRoomReservation', form);
+            },
             getReservedRoomsList: function (form) {
                 console.log("SSO from getReservedRoomsList of services.js" + form.SSO);
                 return $http.post(base+'/roomReserveList', form);// {
@@ -87,6 +99,12 @@ angular.module('starter.services', [])
                     //    token: SSO
                     //}
              //   });
+            },
+            cancelReservation: function (form) {
+                console.log("services.js: SSO from cancelReservation: " + form.SSO);
+                console.log("services.js: Room ID from cancelReservation: " + form.reservationID);
+                return $http.post(base+'/cancelReservation', form);
+
             },
 	    getShiftDetails: function (form) {
                 console.log("SSO from services.js: " + form.SSO);

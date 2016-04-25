@@ -1,0 +1,13 @@
+{
+    "jscodehints.detectedExclusions": [
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/angular/angular.min.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/test-main.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/angular-ui/angular-ui-router.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/angular-ui/angular-ui-router.min.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/ionic-angular.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/ionic-angular.min.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/platforms/android/assets/www/lib/ionic/js/ionic.bundle.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/www/js/app.js",
+        "C:/Users/Teja/Downloads/ASE_S16_G7-sc9v9_1/SourceCode/StudentCompanion/www/js/controllers.js"
+    ]
+}

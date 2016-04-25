@@ -55,6 +55,7 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
+        
 		.state('register', {
       url: '/register',
       templateUrl: 'templates/register.html',
@@ -86,12 +87,30 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
+            .state('app.libRoomsList', {
+                url: '/libRoomsList',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/libRoomsList.html',
+                        controller: 'LibraryCtrl'
+                    }
+                }
+            })
             .state('app.roomReserve', {
                 url: '/roomReserve',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/roomReserve.html',
                         controller: 'LibraryCtrl'
+                    }
+                }
+            })
+            .state('app.confirmRoomReserve', {
+                url: '/confirmRoomReserve',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/confirmRoomReserve.html',
+                        controller: 'RoomReserveCtrl'
                     }
                 }
             })

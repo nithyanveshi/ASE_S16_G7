@@ -1,0 +1,14 @@
+mongoimport -d studentcompaniondb -h ds011399.mlab.com --port 11399 -u studentcompaniondb --password studentcompaniondb -c RoomReservation --type csv --file RoomReservation.csv –-headerline
+
+#################
+Converting string to date
+########################
+db.RoomReservation.find().forEach(function(rec) {
+rec.StartTime = new ISODate(rec.StartTime);
+db.RoomReservation.save(rec);
+});
+
+################################
+Port Redirection in AWS:
+################################
+ sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9000
