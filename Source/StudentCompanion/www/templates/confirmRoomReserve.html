@@ -1,0 +1,41 @@
+<ion-view view-title="Confirmation">
+    <ion-nav-buttons side="right" ng-show="true">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div ng-controller="RoomReserveCtrl">
+
+            <div>
+                <h6>Room Number: {{roomNo}}</h6>
+                <h6>Reservation Date: {{selectedDate}}</h6>
+                <h6>Start Time: {{resStHr}}</h6>
+                <h6>End Time: {{resEnHr}}</h6>
+            </div>
+            <div>
+                <h7>Below details are required for future communication with respect to the reserved room.</h7>
+            </div>
+            <form ng-submit="finalReserveRoom(FullName, Email, Mobile)" class="formBg" name="$parent.loginForm">
+                <div class="list list-inset">
+                    <label class="item item-input">
+                        <i class="icon ion-person placeholder-icon"></i>
+                        <input type="text" placeholder="Full Name" value={{FullName}} ng-model="FullName" required>
+                    </label>
+                    <label class="item item-input">
+                        <i class="icon ion-ios-at placeholder-icon"></i>
+                        <input type="email" placeholder="hello@world.com" value={{Email}} ng-model="Email" required>
+                    </label>
+                    <label class="item item-input">
+                        <i class="icon ion-ios-telephone placeholder-icon"></i>
+                        <input type="phone" placeholder="123-456-7890" value={{Mobile}} ng-model="Mobile" required>
+                    </label>
+                    <label class="item">
+                        <button class="button button-block button-positive" type="submit">Submit</button>
+                    </label>
+
+                    <div id="x"></div>
+                </div>
+            </form>
+           </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,60 @@
+<ion-view view-title="My Reserved Rooms">
+    <ion-nav-buttons side="right" ng-show="true">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content ng-controller="LibraryCtrl">
+        <ion-refresher
+                pulling-text="Pull to refresh..."
+                on-refresh="doRefresh()">
+        </ion-refresher>
+        <div>
+            <!--<onezone-datepicker datepicker-object="onezoneDatepicker">-->
+            <!--<button class="button button-block button-outline button-positive show-onezone-datepicker">-->
+            <!--{{  "{{onezoneDatepicker.date | date:'dd MMMM yyyy'}\}"   }}-->
+            <!--</button>-->
+            <!--</onezone-datepicker>-->
+
+            <!--<ionic-datepicker date="currentDate" min="minDate" max="maxDate" callback="openDatePicker">-->
+
+
+
+            <!--<button class="button button-block button-positive" ng-click="openDatePickerOne()"> Select Date</button>-->
+
+            <ion-card>
+                <ion-card-header>
+                    <div class="row">
+                        <div class="col col-center"><strong>Room No.</strong></div>
+                        <div class="col col-center"><strong>Date</strong></div>
+                        <div class="col col-center"><strong>Start</strong></div>
+                        <div class="col col-center"><strong>End</strong></div>
+                        <div class="col col-center"><strong>Can't make it?</strong></div>
+                        <!--<div class="col"><strong>User</strong></div>-->
+                    </div>
+                </ion-card-header>
+                <ion-list>
+                    <ion-item collection-repeat="reservation in ownReservedRoomsList">
+                        <ion-card>
+                            <div class="row">
+                                <div class="col col-center">{{reservation.Room_ID}}</div>
+                                <div class="col col-center">{{reservation.Dt}}</div>
+                                <div class="col col-center">{{reservation.StartTime}}</div>
+                                <div class="col col-center">{{reservation.EndTime}}</div>
+                                <!--<div class="col">{{room.Login_ID}}</div>-->
+                                <div class="col col-center">
+                                    <button class="button button-small icon-left ion-trash-a button-assertive"
+                                            ng-click="cancelReservation(reservation._id)">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+            <div id="nodata"></div>
+            <!--</ionic-datepicker>-->
+        </div>
+
+    </ion-content>
+</ion-view>

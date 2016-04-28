@@ -1,0 +1,33 @@
+<ion-view view-title="Register">
+  <ion-pane>
+    <ion-header-bar>
+      <button class="button button-icon icon ion-home" ng-click="login()" ></button>
+      <h1 class="title">Register</h1>
+    </ion-header-bar>
+
+    <ion-content padding="true">
+      <div class="list">
+<label class="item item-input">
+          <input type="text" id="fname" class="form-control" placeholder="Enter Firstname" required autofocus ng-model="fname">
+        </label>
+        <label class="item item-input">
+          <input type="text" id="lname" class="form-control" placeholder="Enter Lastname" required autofocus ng-model="lname">
+        </label>
+          <label class="item item-input">
+          <input type="text" id="lname" class="form-control" placeholder="Enter Date Of Birth" required autofocus ng-model="dob">
+        </label>
+          <label class="item item-input">
+          <input type="text" id="lname" class="form-control" placeholder="Enter MailId" required autofocus ng-model="email">
+        </label>        
+        <label class="item item-input">  
+          <input type="text" id="username" class="form-control" placeholder="Enter SSO" required autofocus ng-model="sso">
+        </label>
+        <label class="item item-input">
+          <input type="password" id="password" class="form-control" placeholder="Enter Password" required autofocus ng-model="password">
+        </label>
+<button class="button button-block button-positive padding-horizontal"  ng-click="register(fname,lname,dob,email,sso,password)">Register</button>
+      </div>
+
+    </ion-content>
+  </ion-pane>
+</ion-view>

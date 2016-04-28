@@ -3,8 +3,8 @@
  */
 angular.module('starter.services', [])
     .factory('API', function ($rootScope, $http, $ionicLoading, $window) {
-//   var base = "http://ec2-52-34-188-157.us-west-2.compute.amazonaws.com";
-     var base = "http://localhost:9000";
+      //var base = "http://ec2-52-34-188-157.us-west-2.compute.amazonaws.com";
+        var base = "http://localhost:9000";
         $rootScope.show = function (text) {
             $rootScope.loading = $ionicLoading.show({
                 content: text ? text : 'Loading',
@@ -61,6 +61,19 @@ angular.module('starter.services', [])
                 //    }
                 //});
             },
+            getHolidays: function (form) {
+                console.log("services.js: SSO from getHolidays: " + form.SSO);
+                return $http.post(base+'/getHolidays', form);
+            },
+			getProfileDetails: function(form){
+				console.log("services.js: SSO from getProfileDetails: " + form.SSO);
+				return $http.post(base+'/profile', form);//,{
+                  //  method : 'GET',
+                    //    params:{
+                      //      token:form.SSO
+                      //  }   
+               // }
+			},
             getLibRoomsList: function (form) {
             console.log("SSO from services.js: " + form.SSO);
             return $http.post(base+'/libRoomsList', form);//, {
@@ -69,18 +82,51 @@ angular.module('starter.services', [])
             //        token: form.SSO
             //    }
             //});
+          },
+            cacheUserProfile: function (form) {
+                console.log("services.js: SSO from cacheUserProfile: " + form.SSO);
+                return $http.post(base+'/cacheUserProfile', form);
             },
-            getLabsList: function (form) {
+            newRoomReservation: function (form) {
+                console.log("services.js: SSO from newRoomReservation: " + form.Login_ID);
+                return $http.post(base+'/newRoomReservation', form);
+            },
+            getReservedRoomsList: function (form) {
+                console.log("SSO from getReservedRoomsList of services.js" + form.SSO);
+                return $http.post(base+'/roomReserveList', form);// {
+                    //method: 'GET',
+                    //params: {
+                    //    token: SSO
+                    //}
+             //   });
+            },
+            cancelReservation: function (form) {
+                console.log("services.js: SSO from cancelReservation: " + form.SSO);
+                console.log("services.js: Room ID from cancelReservation: " + form.reservationID);
+                return $http.post(base+'/cancelReservation', form);
+
+            },
+	    getShiftDetails: function (form) {
+                console.log("SSO from services.js: " + form.SSO);
+                return $http.post(base+'/shifts', form);//, {
+                //    method: 'GET',
+                //    params: {
+                //        token: form.SSO
+            //    }
+                //});
+            },
+	    getLabsList: function (form) {
             console.log("SSO from services.js: " + form.SSO);
             return $http.post(base+'/labs', form);
             },
-            getOne: function (id, email) {
-                return $http.get(base+'/api/v1/bucketList/data/item/' + id, {
-                    method: 'GET',
-                    params: {
-                        token: SSO
-                    }
-                });
+            getOwnReservedRoomsList: function (form) {
+                console.log("SSO from getOwnReservedRoomsList of services.js " + form.SSO);
+                return $http.post(base+'/ownRoomReserveList', form);// {
+                //method: 'GET',
+                //params: {
+                //    token: SSO
+                //}
+                //   });
             },
             saveItem: function (form, email) {
                 return $http.post(base+'/api/v1/bucketList/data/item', form, {

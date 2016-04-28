@@ -1,10 +1,55 @@
 <ion-view view-title="Reserve a room">
-    <ion-nav-buttons side="right" ng-show="false">
+    <ion-nav-buttons side="right" ng-show="true">
         <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
         </button>
     </ion-nav-buttons>
     <ion-content>
         <div ng-controller="LibraryCtrl">
-            </div>
-        </ion-content>
-    </ion-view>
+            <!--<onezone-datepicker datepicker-object="onezoneDatepicker">-->
+            <!--<button class="button button-block button-outline button-positive show-onezone-datepicker">-->
+            <!--{{  "{{onezoneDatepicker.date | date:'dd MMMM yyyy'}\}"   }}-->
+            <!--</button>-->
+            <!--</onezone-datepicker>-->
+
+            <!--<ionic-datepicker date="currentDate" min="minDate" max="maxDate" callback="openDatePicker">-->
+
+
+
+            <button class="button button-block button-positive" ng-click="openDatePickerOne()"> Select Date</button>
+            <div id="nodata"></div>
+
+            <ion-card>
+                <div ng-if="availableHrs!=undefined">
+                <ion-card-header>
+                    <div class="row">
+                        <div class="col col-30"><strong>Room Number</strong></div>
+                        <div class="col"><strong>Date</strong></div>
+                        <div class="col"><strong>Slot</strong></div>
+                        <div class="col"><strong>Want it?</strong></div>
+                    </div>
+                </ion-card-header>
+                    </div>
+                <ion-list>
+                    <ion-item collection-repeat="slot in availableHrs">
+
+                        <ion-card>
+                            <div class="row">
+                                <div class="col col-30">{{roomNo}}</div>
+                                <div class="col">{{selectedDate}}</div>
+                                <div class="col">{{slot}}</div>
+                                <div class="col">
+                                    <button class="button button-small button-balanced"
+                                            ng-click="confirmRoomReserve(roomNo, selectedDate,slot)">
+                                        Reserve
+                                    </button>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+            <!--</ionic-datepicker>-->
+        </div>
+
+    </ion-content>
+</ion-view>
