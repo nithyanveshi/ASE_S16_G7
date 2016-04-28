@@ -4,15 +4,14 @@
         </button>
     </ion-nav-buttons>
     <ion-content>
-        <h1>Labs</h1>
-        <div ng-controller="LabsCtrl">
-            <div>
-                <ul>
-                    <li ng-repeat="x in labDetails">
-                        {{ x.LabName }}
-                    </li>
-                </ul>
-            </div>
+	<h1>Labs Information</h1>
+    <div ng-controller="LabsCtrl">
+        <div style="overflow-x:auto;">
+		<table style="width:100%">
+        <tr><td>Lab</td><td>Capacity</td><td>In-Use</td></tr>
+        <tr ng-repeat="x in labDetails | orderBy:'ID'"><td>{{ x.LabName }}</td><td>{{ x.Capacity }}</td><td>{{ x.InUse }}</td></tr>
+        </table>
         </div>
-    </ion-content>
+	</div>
+  </ion-content>
 </ion-view>
