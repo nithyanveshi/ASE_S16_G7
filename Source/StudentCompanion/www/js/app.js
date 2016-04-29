@@ -55,6 +55,15 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
+        .state('app.labInfo', {
+                url: '/labInfo',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/labInfo.html',
+                        controller: 'LabsDetailCtrl'
+                    }
+                }
+            })
         
 		.state('register', {
       url: '/register',

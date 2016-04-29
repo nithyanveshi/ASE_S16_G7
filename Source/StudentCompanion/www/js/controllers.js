@@ -709,17 +709,17 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker'])
             SSO: SSO
         }).success(function (data) {
             if(data != null) {
+//              console.log("Valid Labs details from controller"+JSON.stringify(data));
                 console.log("Valid Labs details from controller");
+                localStorage.setItem("labData", JSON.stringify(data)); 
                 $scope.labDetails = data;
                 $rootScope.hide();
-
             }
             else {
                 console.log("LabsCtrl: Error Occured");
                 $rootScope.hide();
                 $rootScope.notify("LabsCtrl: Error Occured");
                 $state.go('app.home');
-
             }
 
         }).error(function (error) {
@@ -728,7 +728,37 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker'])
             $rootScope.notify("LabsCtrl: Duh, we broke");
             $state.go('app.home');
         });
+    
+        $scope.viewDetails = function(labID){
+          localStorage.setItem("labID", labID);
+//          alert("Clicked lab "+labID);
+            $state.go('app.labInfo');
+        }
+        
     })
+    .controller('LabsDetailCtrl', function($scope, $stateParams) {
+            var SSO = localStorage.getItem("token");
+            var labId = localStorage.getItem("labID");
+            $scope.labID = localStorage.getItem("labID");
+            $scope.weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+//          var labsInfo = localStorage.getItem("labsData");
+            var labDataInfo = JSON.parse(localStorage.getItem("labData"));
+//          console.log(labDataInfo);
+            
+            $scope.labsList;
+                for (var i = 0; i < labDataInfo.length; i++) {
+                    if (labDataInfo[i].ID == labId) {
+                    $scope.labsList = labDataInfo[i];
+                    }
+                }
+    
+/*            if(SSO == undefined) {
+                $state.go('login');
+            }
+            
+*/        })
+
+
     .controller('PlaylistCtrl', function($scope, $stateParams) {
         var SSO = localStorage.getItem("token");
         if(SSO == undefined) {

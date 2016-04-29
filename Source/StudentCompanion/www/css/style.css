@@ -10,7 +10,7 @@
 }
 
 .col {
-    folat: center;
+    float: center;
 }
 *, *:before, *:after {
   box-sizing: border-box;
@@ -27,6 +27,13 @@ html, body {
   html, body {
     font-size: 50%;
   }
+}
+
+.alignleft {
+	float: left;
+}
+.alignright {
+	float: right;
 }
 
 svg {
