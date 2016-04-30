@@ -1,22 +1,93 @@
-<ion-view view-title="Register">
+<ion-view  view-title="Register">
   <ion-pane>
     <ion-header-bar>
-      <button class="button button-icon icon ion-home" ng-click="login()" ></button>
-      <h1 class="title">Register</h1>
+              <h1 class="title">Student Registration</h1>
+      <button class="button button-icon" ng-click="login()" >Login<i class="icon ion-log-in"></i></button>
+
     </ion-header-bar>
 
-    <ion-content padding="true">
+    <ion-content padding="true" ng-controller="RegisterCtrl">
+        <form name="myForm" novalidate>
       <div class="list">
-
-        <label class="item item-input">
-          <input type="text" id="username" class="form-control" placeholder="Enter SSO" required autofocus ng-model="sso">
+<label class="item item-input">
+    <i class="icon ion-person placeholder-icon"></i>
+    <span class="input-label">First Name</span>
+          <input type="text" id="fname" class="form-control" placeholder="Firstname" required autofocus ng-model="FirstName" required>
+        </label>
+        <label class="item item-input">       
+            <i class="icon ion-person placeholder-icon"></i>
+            <span class="input-label">Last Name</span>
+          <input type="text" id="lname" class="form-control" placeholder="Lastname" required autofocus ng-model="LastName" required>
+        </label>
+          <label class="item item-input">           
+              <i class="icon ion-calendar placeholder-icon"></i>
+              <span class="input-label">Date of Birth</span>
+          <input type="text" id="dob" class="form-control" placeholder="MM-DD-YYYY" required autofocus ng-model="DOB" >
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-email placeholder-icon"></i>
+              <span class="input-label">Email Id</span>
+          <input type="email" id="email" class="form-control" placeholder="abcde@mail.umkc.edu" required autofocus ng-model="Email">
+        </label>        
+        <label class="item item-input">  
+            <i class="icon ion-person placeholder-icon"></i>
+            <span class="input-label">SSO</span>
+  <input ng-minlength="5" ng-maxlength="5" type="text" id="username" class="form-control" placeholder="ABCDE" autofocus ng-model="SSO" required>
         </label>
         <label class="item item-input">
-          <input type="password" id="password" class="form-control" placeholder="Enter Password" required autofocus ng-model="password">
+            <i class="icon ion-key placeholder-icon"></i>
+            <span class="input-label">Password</span>
+          <input ng-minlength="5"type="password" id="password" class="form-control" placeholder="Enter Password" required autofocus ng-model="Password" required>            
         </label>
-        <button class="button button-block button-positive padding-horizontal"  ng-click="register(sso,password)">Register</button>
+          <label class="item item-input">
+              <i class="icon ion-iphone placeholder-icon"></i>
+              <span class="input-label">Mobile No</span>
+          <input type="text" id="mobile" class="form-control" placeholder="123-456-7890" required autofocus ng-model="MobileNo"> 
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-location placeholder-icon"></i>
+              <span class="input-label">Address 1</span>
+          <input type="text" id="address1" class="form-control" placeholder="Address 1" required autofocus ng-model="Address1"> 
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-location placeholder-icon"></i>
+              <span class="input-label">Address 2</span>
+          <input type="text" id="address2" class="form-control" placeholder="Address 2" required autofocus ng-model="Address2"> 
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-location placeholder-icon"></i>
+              <span class="input-label">City</span>
+          <input type="text" id="City" class="form-control" placeholder="City" required autofocus ng-model="City"> 
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-location placeholder-icon"></i>
+              <span class="input-label">State</span>
+          <input type="text" id="State" class="form-control" placeholder="State" required autofocus ng-model="State"> 
+        </label>
+          <label class="item item-input">
+              <i class="icon ion-location placeholder-icon"></i>
+              <span class="input-label">Zip Code</span>
+          <input type="text" id="Zip" class="form-control" placeholder="Zip Code" required autofocus ng-model="ZipCode"> 
+        </label>
+          
+<div class="padding">
+            <p ng-show="myForm.fname.$error.required">* First Name is required</p>
+                <p ng-show="myForm.lname.$error.required">* Last Name is required</p>
+            <p ng-show="myForm.sso.$error.minlength">* SSO must be longer than 5 characters</p>
+                <p ng-show="myForm.sso1.$error.minlength">* SSO must be longer than 5 characters</p>
+            <p ng-show="myForm.sso.$error.maxlength">* SSO must be longer than 5 characters</p>
+                <p ng-show="myForm.sso1.$error.maxlength">* SSO must be longer than 5 characters</p>
+            <p ng-show="myForm.password.$error.required">* Password is required</p>
+            
+        </div>
+          
+          <div class="padding">
+          <button class="button button-balanced button-block button-shape" ng-disabled="myForm.$invalid"
+                  ng-click="register(FirstName,LastName,DOB,Email,SSO,Password,MobileNo,Address1,Address2,City,State,ZipCode)">Register</button>
+          </div>
       </div>
-
+            
+</form>
     </ion-content>
   </ion-pane>
 </ion-view>

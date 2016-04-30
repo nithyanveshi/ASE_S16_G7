@@ -52,6 +52,19 @@ input, button {
 .scroll {
     height: 100%;
 }
+
+.card-red .item{
+    background: red;
+}
+
+.card-blue .item{
+    background: blue;
+}
+
+.card-green .item{
+    background: green;
+}
+
 .cont {
   position: relative;
   height: 100%;

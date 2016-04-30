@@ -4,8 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 //var morgan = require('morgan');
 
 
-
-var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs', 'Holidays']);
+var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs', 'Holidays', 'LibraryHours', 'Enrollments', 'Dues']);
 
 var server = restify.createServer();
 
@@ -14,7 +13,7 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 //server.use(morgan('dev'));
 
-server.use(function(req, res, next) {
+server.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
@@ -38,7 +37,7 @@ server.post('/login', function (req, res, next) {
 
     console.log("Inside Server " + user.SSO + " " + user.Password);
     db.Login.findOne({SSO: req.params.SSO, Password: req.params.Password}, function (err, data) {
-        if(err) {
+        if (err) {
             res.writeHead(403, {
                 'Content-Type': 'application/json; charset=utf-8'
             });
@@ -58,6 +57,125 @@ server.post('/login', function (req, res, next) {
     //console.log("User found: " + Login, null, '\t');
 
     return next();
+});
+server.post('/editUserPassword',function(req,res,next){
+    var user = req.params;
+    if (user.SSO.trim().length == 0) {
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "Invalid Credentials in login"
+        }));
+    }
+   
+        console.log("Inside Server " + user.SSO);
+    console.log("old password " + req.params.Password);
+        db.Login.update({"SSO":user.SSO},{$set:{"Password":req.params.Password}},
+                       {returnNewDocument:true},function(err,data){
+                                if(err){
+         res.writeHead(403, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify({
+                error: "Invalid User Credentials"
+            }));
+            console.log("Server: Invalid Credentials");
+    }
+         else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify(data));
+            console.log("Server: Success Login");
+        }   
+    });
+
+    return next();
+});
+server.post('/registerUser',function(req,res,next){
+     var user = req.params;
+    if (user.SSO.trim().length == 0) {
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "Invalid Credentials in login"
+        }));
+    }
+ console.log("Inside Server ");  db.Profile.insert({SSO:user.SSO,FirstName:user.FirstName,LastName:user.LastName,DOB:user.DOB,MobileNo:user.MobileNo,Email:user.Email,Address1:user.Address1,Address2:user.Address2,City:user.City,State:user.State,ZipCode:user.ZipCode},function(err,data){
+                                if(err){
+         res.writeHead(403, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify({
+                error: "Invalid User Credentials"
+            }));
+            console.log("Server: Invalid Credentials");
+    }
+    else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify(data));
+            console.log("Server: Success Login");
+        }
+});
+    db.Login.insert({SSO:user.SSO,Password:user.Password},function(err,data){
+                                if(err){
+         res.writeHead(403, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify({
+                error: "Invalid User Credentials"
+            }));
+            console.log("Server: Invalid Credentials");
+    }
+    else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify(data));
+            console.log("Server: Success Login");
+        }
+});
+
+return next();    
+});
+
+server.post('/editUserProfile', function(req,res,next) {
+    
+    var user = req.params;
+    if (user.SSO.trim().length == 0) {
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "Invalid Credentials in login"
+        }));
+    }
+ 
+    console.log("Inside Server " + user.SSO);
+    db.Profile.update({"SSO": user.SSO},{$set:{"MobileNo":req.params.MobileNo,"Address1":req.params.Address1,"Address2":req.params.Address2,"City":req.params.City,"State":req.params.State,"ZipCode":req.params.ZipCode}},{returnNewDocument:true},function(err,data){
+                                if(err){
+         res.writeHead(403, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify({
+                error: "Invalid User Credentials"
+            }));
+            console.log("Server: Invalid Credentials");
+    }
+    else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify(data));
+            console.log("Server: Success Login");
+        }
+});
+ 
+return next();    
 });
 
 
@@ -75,7 +193,7 @@ server.post('/cacheUserProfile', function (req, res, next) {
 
     console.log("Inside Server " + user.SSO);
     db.Profile.findOne({"SSO": req.params.SSO}, function (err, data) {
-        if(err) {
+        if (err) {
             res.writeHead(403, {
                 'Content-Type': 'application/json; charset=utf-8'
             });
@@ -97,6 +215,112 @@ server.post('/cacheUserProfile', function (req, res, next) {
     return next();
 });
 
+
+server.post('/getEnrollments', function (req, res, next) {
+
+
+    var user = req.params;
+    var sem = "";
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "mServer.js: Error in getEnrollments for enrollment details fetch"
+        }));
+    }
+    else {
+        if (["Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(user.month) >= 0) {
+            sem = "Fall";
+        }
+        else if (["Jan", "Feb", "Mar", "Apr", "May"].indexOf(user.month) >= 0) {
+            sem = "Spring";
+        }
+        else if (["Jun", "Jul"].indexOf(user.month) >= 0) {
+            sem = "Summer";
+        }
+        console.log("mServer.js: Inside getEnrollments " + user.SSO);
+        console.log("mServer.js: Inside getEnrollments: Semester: " + sem + ", Year: " + user.year);
+        db.Enrollments.find({"SSO": user.SSO, "Semester": sem, "Year": parseInt(user.year)}, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "mServer.js: Error occured during Enrollment details fetch"
+                }));
+                console.log("mServer.js: Error occured during Enrollment details fetch");
+            }
+            else {
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify(data));
+                console.log("mServer.js: Success Enrollment Details fetch");
+            }
+        });
+    }
+
+    return next();
+});
+
+
+server.post('/getDues', function (req, res, next) {
+
+
+    var user = req.params;
+    var sem = "";
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "mServer.js: Error in getDues for Dues details fetch"
+        }));
+    }
+    else {
+        if (["Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(user.month) >= 0) {
+            sem = "Fall";
+        }
+        else if (["Jan", "Feb", "Mar", "Apr", "May"].indexOf(user.month) >= 0) {
+            sem = "Spring";
+        }
+        else if (["Jun", "Jul"].indexOf(user.month) >= 0) {
+            sem = "Summer";
+        }
+        console.log("mServer.js: Inside getDues " + user.SSO);
+        console.log("mServer.js: Inside getDues: Semester: " + sem + ", Year: " + user.year);
+        db.Dues.find({"SSO": user.SSO, "Semester": sem, "Year": parseInt(user.year)}, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "mServer.js: Error occured during Dues details fetch"
+                }));
+                console.log("mServer.js: Error occured during Dues details fetch");
+            }
+            else {
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                for(var i=0; i<data.length; i++) {
+                    console.log(JSON.stringify(data[i]));
+                }
+                res.end(JSON.stringify(data));
+                console.log("mServer.js: Success Dues Details fetch");
+            }
+        })
+    }
+
+    //console.log("User found: " + Login, null, '\t');
+
+    return next();
+});
+
+
 server.post('/library', function (req, res, next) {
 
 
@@ -113,7 +337,7 @@ server.post('/library', function (req, res, next) {
     else {
         console.log("Inside Library Server " + user.SSO);
         db.Library.findOne(function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -137,36 +361,35 @@ server.post('/library', function (req, res, next) {
     return next();
 });
 
-server.post('/profile',function(req,res,next)  {
+server.post('/profile', function (req, res, next) {
     var user = req.params;
     var query = {};
     query["SSO"] = user.SSO;
-    if(req.params.SSO.trim().length == 0){
+    if (req.params.SSO.trim().length == 0) {
         console.log("Inside if loop");
-        res.writeHead(403,{
-            'Content-Type':'application/json; charset=utf-8'
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
         });
         res.end(JSON.stringify({
-            error:"Error in mServer.js for User profile details fetch"
+            error: "Error in mServer.js for User profile details fetch"
         }));
     }
     else {
         console.log("Inside User Profile Server" + user.SSO);
 
-        db.Profile.findOne(query,function(err,data) {
-            if(err){
-                res.writeHead(403,{
+        db.Profile.findOne(query, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
                 res.end(JSON.stringify({
-                    error:"Error occured during User details fetch"
+                    error: "Error occured during User details fetch"
                 }));
                 console.log("Server: User Profile error");
             }
-            else
-            {
-                res.writeHead(200,{
-                    'Content-Type':'application/json; charset=utf-8'
+            else {
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
                 });
                 res.end(JSON.stringify(data));
                 console.log("Server:success Profile details fetch");
@@ -175,6 +398,44 @@ server.post('/profile',function(req,res,next)  {
     }
     return next();
 });
+
+
+server.post('/getLibraryHours', function (req, res, next) {
+
+    var user = req.params;
+    if (user.SSO.trim().length == 0) {
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "Invalid Credentials in getLibraryHours"
+        }));
+    }
+
+    console.log("Inside Server " + user.SSO);
+    db.LibraryHours.findOne({"StartTime": {$regex: user.selectedDate}}, function (err, data) {
+        if (err) {
+            res.writeHead(403, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify({
+                error: "Invalid User Credentials"
+            }));
+            console.log("Server: Invalid Credentials");
+        }
+        else {
+            res.writeHead(200, {
+                'Content-Type': 'application/json; charset=utf-8'
+            });
+            res.end(JSON.stringify(data));
+            console.log("Server: Success Login");
+        }
+    });
+    //console.log("User found: " + Login, null, '\t');
+
+    return next();
+});
+
 
 server.post('/libRoomsList', function (req, res, next) {
 
@@ -192,7 +453,7 @@ server.post('/libRoomsList', function (req, res, next) {
     else {
         console.log("mServer.js: Inside Library Rooms Server " + user.SSO);
         db.LibraryRooms.find(function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -236,8 +497,12 @@ server.post('/roomReserveList', function (req, res, next) {
         console.log("mServer.js: Inside Reserve Rooms Server User: " + user.SSO + " SelectedDate: " + user.selectedDate);
         console.log("mServer.js: Inside Reserve Rooms Server Selected Date: " + user.selectedDate);
         console.log("mServer.js: Inside Reserve Rooms Server Selected Room Number: " + user.selectedRoomNo);
-        db.RoomReservation.find({"StartTime": {$regex: user.selectedDate}, "Room_ID": user.selectedRoomNo.toString(), "Status": "Active"}, function (err, data) {
-            if(err) {
+        db.RoomReservation.find({
+            "StartTime": {$regex: user.selectedDate},
+            "Room_ID": user.selectedRoomNo.toString(),
+            "Status": "Active"
+        }, function (err, data) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -276,7 +541,9 @@ server.post('/shifts', function (req, res, next) {
     }
     else {
         console.log("Inside Shift Server " + user.SSO);
-        db.SAShifts.find(function (err, data) {
+        console.log("mServer.js: Inside Shift Server  User: " + user.SSO + " SelectedDate: " + user.selectedDate);
+        console.log("mServer.js: Inside Shift Server Selected Date: " + user.selectedDate);
+        db.SAShifts.find({"Profile_ID": req.params.SSO,"Date": {$regex: user.selectedDate}},function (err, data) {
             if(err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -300,6 +567,165 @@ server.post('/shifts', function (req, res, next) {
 
     return next();
 });
+server.post('/subs', function (req, res, next) {
+
+
+    var user = req.params;
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "Error in mServer.js for Shift details fetch"
+        }));
+    }
+    else {
+        console.log("Inside Sub Server " + user.SSO);
+        console.log("mServer.js: Inside Sub Server  User: " + user.SSO + " SelectedDate: " + user.selectedDate);
+        console.log("mServer.js: Inside Sub Server Selected Date: " + user.selectedDate);
+        db.SAShifts.find({"Date": {$regex: user.selectedDate},"IsSubstitution": "Yes","IsTaken": "No"},function (err, data) {
+            if(err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "Error occured during Shifts details fetch"
+                }));
+                console.log("Server: Shift details fetch error");
+            }
+            else {
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify(data));
+                console.log("Server: Success Shifts fetch" + data);
+            }
+        });
+    }
+
+    //console.log("User found: " + Login, null, '\t');
+
+    return next();
+});
+
+server.post('/updateFullShift', function (req, res, next) {
+    var user = req.params;
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "mServer.js: Invalid Session"
+        }));
+    }
+    else {
+        console.log("mServer.js: Inside updateFullShift SSO: " + user.SSO);
+        console.log("mServer.js: Inside updateFullShift Date: " + user.Date + ", Start: " + user.Start + ", End: "
+        + user.End + ", Location: " + user.Location);
+
+        db.SAShifts.insert({"Profile_ID": user.SSO, "Date": user.Date, "Start": user.Start, "End": user.End, "Location": user.Location,
+            "IsSubstitution": "No", "IsTaken": "Yes"}, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "mServer.js: Error occured during SA Shift substitution"
+                }));
+                console.log("mServer.js: SA Shift substitution error");
+            }
+            else {
+                //var lData = data.toArray();
+                //console.log("Data is: " + lData);
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify(data));
+                console.log("mServer.js: Success SA shift substitution: " + JSON.stringify(data));
+            }
+        });
+    }
+});
+
+
+server.post('/updateOwnerFullShift', function (req, res, next) {
+    var user = req.params;
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "mServer.js: Invalid Session"
+        }));
+    }
+    else {
+        console.log("mServer.js: Inside updateOwnerFullShift SSO: " + user.SSO);
+        console.log("mServer.js: Inside updateOwnerFullShift Shift ID: " + user.ShiftPostedID);
+
+        db.SAShifts.update({"_id": ObjectId(user.ShiftPostedID)},{$set: {"IsSubstitution": "Yes", "IsTaken": "Yes"}}, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "mServer.js: Error occured during Owner shift removal"
+                }));
+                console.log("mServer.js: Owner shift removal error");
+            }
+            else {
+                //var lData = data.toArray();
+                //console.log("Data is: " + lData);
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify(data));
+                console.log("mServer.js: Success Owner shift removal: " + JSON.stringify(data));
+            }
+        });
+    }
+});
+
+server.post('/insertHalfShift', function (req, res, next) {
+    var user = req.params;
+    if (req.params.SSO.trim().length == 0) {
+        console.log("Inside if loop");
+        res.writeHead(403, {
+            'Content-Type': 'application/json; charset=utf-8'
+        });
+        res.end(JSON.stringify({
+            error: "mServer.js: Invalid Session"
+        }));
+    }
+    else {
+        console.log("mServer.js: Inside insertHalfShift SSO: " + user.SSO);
+        //console.log("mServer.js: Inside insertHalfShift Shift ID: " + user.ShiftPostedID);
+
+        db.SAShifts.insert({"Profile_ID": user.SSO, "Date": user.Date, "Start": user.Start, "End": user.End, "Location": user.Location,
+            "IsSubstitution": user.IsSubstitution, "IsTaken": user.IsTaken}, function (err, data) {
+            if (err) {
+                res.writeHead(403, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify({
+                    error: "mServer.js: Error occured during partial shift adding"
+                }));
+                console.log("mServer.js: Partial shift adding error");
+            }
+            else {
+                //var lData = data.toArray();
+                //console.log("Data is: " + lData);
+                res.writeHead(200, {
+                    'Content-Type': 'application/json; charset=utf-8'
+                });
+                res.end(JSON.stringify(data));
+                console.log("mServer.js: Success Added partial shift: " + JSON.stringify(data));
+            }
+        });
+    }
+});
 
 server.post('/labs', function (req, res, next) {
     var user = req.params;
@@ -315,7 +741,7 @@ server.post('/labs', function (req, res, next) {
     else {
         console.log("Inside Labs Server " + user.SSO);
         db.Labs.find(function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -355,7 +781,7 @@ server.post('/cancelReservation', function (req, res, next) {
         console.log("mServer.js: Inside cancelReservation Romm ID: " + user.reservationID);
 
         db.RoomReservation.update({_id: ObjectId(user.reservationID)}, {$set: {"Status": "Cancelled"}}, function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -398,9 +824,11 @@ server.post('/newRoomReservation', function (req, res, next) {
     console.log("mServer.js: Email: " + user.Email);
     console.log("mServer.js: Mobile: " + user.Mobile);
 
-    db.RoomReservation.insert({"Room_ID": user.Room_ID, "StartTime": user.StartTime, "EndTime": user.EndTime, "Login_ID": user.Login_ID,
-                                "Status": user.Status, "ReservedFor": user.ReservedFor, "Email": user.Email, "Mobile": user.Mobile}, function (err, data) {
-        if(err) {
+    db.RoomReservation.insert({
+        "Room_ID": user.Room_ID, "StartTime": user.StartTime, "EndTime": user.EndTime, "Login_ID": user.Login_ID,
+        "Status": user.Status, "ReservedFor": user.ReservedFor, "Email": user.Email, "Mobile": user.Mobile
+    }, function (err, data) {
+        if (err) {
             res.writeHead(403, {
                 'Content-Type': 'application/json; charset=utf-8'
             });
@@ -438,7 +866,7 @@ server.post('/getHolidays', function (req, res, next) {
         console.log("mServer.js: Inside getHolidays: SSO: " + user.SSO);
 
         db.Holidays.find({}, function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -479,7 +907,7 @@ server.post('/ownRoomReserveList', function (req, res, next) {
     else {
         console.log("Inside Own Reserve Rooms Server " + user.SSO);
         db.RoomReservation.find({"Login_ID": user.SSO, "Status": "Active"}, function (err, data) {
-            if(err) {
+            if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
                 });
@@ -508,7 +936,6 @@ server.post('/ownRoomReserveList', function (req, res, next) {
 server.listen(9000, function () {
     console.log("Server started @ 9000");
 });
-
 
 
 server.get("/products", function (req, res, next) {

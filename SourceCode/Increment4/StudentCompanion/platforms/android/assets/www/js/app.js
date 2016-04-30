@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'ionic-datepicker'])
+angular.module('starter', ['ionic', 'toaster', 'starter.controllers', 'starter.services', 'ionic-datepicker', 'ngAnimate', 'ngSanitize'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
@@ -45,8 +45,8 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
-	    
-	    .state('app.labs', {
+
+            .state('app.labs', {
                 url: '/labs',
                 views: {
                     'menuContent': {
@@ -55,6 +55,16 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
+        .state('app.labInfo', {
+                url: '/labInfo',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/labInfo.html',
+                        controller: 'LabsDetailCtrl'
+                    }
+                }
+            })
+        
 		.state('register', {
       url: '/register',
       templateUrl: 'templates/register.html',
@@ -77,11 +87,38 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
 						}
 					}
                 })
+        .state('app.editprofile',{
+            url:'/editprofile',
+            views:{
+                'menuContent':{
+                    templateUrl:'templates/editprofile.html',
+                    controller:'ProfEditCtrl'
+                }
+            }
+        })
+        .state('app.editpassword',{
+            url:'/editpassword',
+            views:{
+                'menuContent':{
+                    templateUrl:'templates/editpassword.html',
+                  // controller:'PwdEditCtrl'
+                }
+            }
+        })
             .state('app.library', {
                 url: '/library',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/library.html',
+                        controller: 'LibraryCtrl'
+                    }
+                }
+            })
+            .state('app.libRoomsList', {
+                url: '/libRoomsList',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/libRoomsList.html',
                         controller: 'LibraryCtrl'
                     }
                 }
@@ -92,6 +129,15 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     'menuContent': {
                         templateUrl: 'templates/roomReserve.html',
                         controller: 'LibraryCtrl'
+                    }
+                }
+            })
+            .state('app.confirmRoomReserve', {
+                url: '/confirmRoomReserve',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/confirmRoomReserve.html',
+                        controller: 'RoomReserveCtrl'
                     }
                 }
             })
@@ -122,12 +168,21 @@ angular.module('starter', ['ionic', 'starter.controllers','starter.services', 'i
                     }
                 }
             })
-			.state('app.samenu', {
+            .state('app.samenu', {
                 url: '/samenu',
                 views: {
                     'menuContent': {
                         templateUrl: 'templates/samenu.html',
                         controller: 'SamenuCtrl'
+                    }
+                }
+            })
+            .state('app.takeShift', {
+                url: '/takeShift',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/takeShift.html',
+                        controller: 'TakeShiftCtrl'
                     }
                 }
             })

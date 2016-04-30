@@ -3,16 +3,23 @@
         <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
         </button>
     </ion-nav-buttons>
-    <ion-content>
-        <h1>Labs</h1>
-        <div ng-controller="LabsCtrl">
-            <div>
-                <ul>
-                    <li ng-repeat="x in labDetails">
-                        {{ x.LabName }}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </ion-content>
+    <ion-content >
+	<h1>Labs Information</h1>
+    <div ng-controller="LabsCtrl">
+        <ion-list>
+            <ion-item ng-repeat="lab in labDetails" 
+                      lab="lab"
+                      ng-click="viewDetails(lab.ID)">
+                <h3 class="alignleft">
+                    <b>{{ lab.LabName }}</b>
+                    <br>
+                    <p>{{lab.InUse}}/{{ lab.Capacity }} In Use</p>
+                </h3>
+                <p class="alignright">
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </p>
+            </ion-item>
+        </ion-list>
+    </div>
+  </ion-content>
 </ion-view>

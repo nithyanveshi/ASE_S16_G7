@@ -17,19 +17,30 @@
 
     <script src="lib/ionic/js/ionic.bundle.js"></script>
     <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js"></script>
+    <!--<link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="lib/ng-toast/dist/ngToast.min.css">-->
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/angular-animate/angular-animate.min.js"></script>
+    <!--<script src="lib/angular-sanitize/angular-sanitize.min.js"></script>-->
+    <!--<script src="lib/ng-toast/dist/ngToast.min.js"></script>-->
 
     <!--<script src="lib/onezonedatepicker/dist/onezone-datepicker.min.js"></script>-->
 
     <!-- cordova script (this will be a 404 during development) -->
+    <link href="lib/toaster.min.css" rel="stylesheet">
+    <script src="lib/toaster.min.js"></script>
     <script src="cordova.js"></script>
+
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
+
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
   </head>
 
   <body ng-app="starter" class="platform-android platform-cordova platform-webview">
+  <toaster-container toaster-options="{'time-out': 3000, 'close-button':false, 'animation-class': 'toast-bottom-center', 'position-class': 'toast-bottom-center'}"></toaster-container>
     <ion-nav-view></ion-nav-view>
   </body>
 </html>

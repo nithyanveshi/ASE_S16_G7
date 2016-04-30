@@ -3,47 +3,80 @@
         <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
         </button>
     </ion-nav-buttons>
-    <ion-content>
-        <div ng-controller="SamenuCtrl">
-            <label class="item item-input">
+    <ion-content  ng-controller="SamenuCtrl">
+        <div>
+            <button class="button button-block button-positive" ng-click="openDatePickerTwo()"> Select Date</button>
+         <!--   <label class="item item-input">
             <span class="input-label">Date</span>
             <input type="date">
-            </label>
+            </label>-->
             <div>
-        <h5>{{shiftDetails.ID}}</h5>
-        <h6>{{shiftDetails.Profile_ID}}</h6>
-        <h6>{{shiftDetails.ShiftStart}} </h6>
-        <h6>{{shiftDetails.ShiftEnd}}</h6>
-        <h6>{{shiftDetails.IsSubstitution}}</h6>
+
+        <!--<h5>{{shiftDetails.ID}}</h5>-->
+        <!--<h6>{{shiftDetails.Profile_ID}}</h6>-->
+        <!--<h6>{{shiftDetails.ShiftStart}} </h6>-->
+        <!--<h6>{{shiftDetails.ShiftEnd}}</h6>-->
+        <!--<h6>{{shiftDetails.IsSubstitution}}</h6>-->
       </div>
           <ion-card>
+              <div ng-if="shiftDetails!=undefined">
             <ion-card-header>
+                <label class = "item">
+                    <h2><b>My Shifts</b></h2>
+                </label>
               <div class="row">
-                <div class="col col-10"><strong>ID</strong></div>
+                  <div class="col"><strong>Date</strong></div>
                 <!--  <div class="col"><strong>Profile ID</strong></div>-->
-                  <div class="col"><strong>Shift Start</strong></div>
-                  <div class="col"><strong>Shift End</strong></div>
-                  <div class="col"><strong>IsSubstitution</strong></div>
+                  <div class="col"><strong>Start</strong></div>
+                  <div class="col"><strong>End</strong></div>
+                  <div class="col"><strong>Location</strong></div>
                 </div>
               </ion-card-header>
               <ion-list>
-                <ion-item collection-repeat="shift in shiftDetails">
+                <ion-item ng-repeat="shift in shiftDetails">
                   <ion-card>
                     <div class="row">
-                      <div class="col col-10">{{shift.ID}}</div>
-                      <!--  <div class="col">{{shift.Profile_ID}}</div>-->
-                        <div class="col">{{shift.ShiftStart}}</div>
-                        <div class="col">{{shift.ShiftEnd}}</div>
-                        <div class="col">{{shift.IsSubstitution}}</div>
+                      <!--<div class="col col-10">{{shift.ID}}</div>-->
+                        <div class="col">{{shift.Date}}</div>
+                        <div class="col">{{shift.Start}}</div>
+                        <div class="col">{{shift.End}}</div>
+                        <div class="col">{{shift.Location}}</div>
                       </div>
                     </ion-card>
                   </ion-item>
                 </ion-list>
+              </div>
               </ion-card>
-              <!--<div class="row header">-->
-          <!--<div class="col col-50">Room Number</div>-->
-          <!--<div class="col">Capacity</div>-->
-          <!--<div class="col">Projector</div>-->
+            </div>
+        <ion-card>
+            <div ng-if="subDetails!=undefined">
+            <ion-card-header>
+                <label class = "item">
+                    <h2><b>Available Shifts</b></h2>
+                </label>
+                <div class="row">
+                    <div class="col"><strong>Profile ID</strong></div>
+                    <div class="col"><strong>Date</strong></div>
+                    <div class="col"><strong>Start</strong></div>
+                    <div class="col"><strong>End</strong></div>
+                    <div class="col"><strong>Location</strong></div>
+                </div>
+            </ion-card-header>
+            <ion-list>
+                <ion-item ng-repeat="sub in subDetails">
+                    <ion-card  ng-click="takeShift(sub._id, sub.Profile_ID, sub.Date, sub.Start, sub.End, sub.Location)">
+                        <div class="row">
+                            <div class="col">{{sub.Profile_ID}}</div>
+                            <div class="col">{{sub.Date}}</div>
+                            <div class="col">{{sub.Start}}</div>
+                            <div class="col">{{sub.End}}</div>
+                            <div class="col">{{sub.Location}}</div>
+                        </div>
+                    </ion-card>
+                </ion-item>
+            </ion-list>
+            </div>
+        </ion-card>
         </div>
             </div>
         </ion-content>

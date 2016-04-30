@@ -1,4 +1,4 @@
-mongoimport -d studentcompaniondb -h ds011399.mlab.com --port 11399 -u studentcompaniondb --password studentcompaniondb -c RoomReservation --type csv --file RoomReservation.csv –-headerline
+mongoimport -d studentcompaniondb -h ds011399.mlab.com --port 11399 -u studentcompaniondb --password studentcompaniondb -c LibraryHours --type csv --file LibraryHours.csv –-headerline
 
 #################
 Converting string to date

@@ -15,28 +15,32 @@
 
 
 
-            <button class="button button-block button-positive" ng-click="openDatePickerOne()"> Select Date</button>
+            <button class="button button-block button-positive" ng-click="openDatePickerOne()"> <i class="icon ion-android-calendar placeholder-icon"></i>Select Date</button>
+            <div id="nodata"></div>
 
             <ion-card>
+                <div ng-if="availableHrs!=undefined">
                 <ion-card-header>
                     <div class="row">
                         <div class="col col-30"><strong>Room Number</strong></div>
-                        <div class="col"><strong>Start</strong></div>
-                        <div class="col"><strong>End</strong></div>
-                        <div class="col"><strong>User</strong></div>
+                        <div class="col"><strong>Date</strong></div>
+                        <div class="col"><strong>Slot</strong></div>
+                        <div class="col"><strong>Want it?</strong></div>
                     </div>
                 </ion-card-header>
+                    </div>
                 <ion-list>
-                    <ion-item collection-repeat="room in reservedRoomsList">
-                        <ion-card>
+                    <ion-item collection-repeat="slot in availableHrs">
+
+                        <ion-card class="card-green">
                             <div class="row">
-                                <div class="col col-30">{{room.Room_ID}}</div>
-                                <div class="col">{{room.StartTime}}</div>
-                                <div class="col">{{room.EndTime}}</div>
-                                <div class="col">{{room.Login_ID}}</div>
+                                <div class="col col-30"><h5>{{roomNo}}</h5></div>
+                                <div class="col"><h5>{{selectedDate}}</h5></div>
+                                <div class="col"><h5>{{slot}}</h5></div>
                                 <div class="col">
                                     <button class="button button-small button-balanced"
-                                            ng-click="reserveRoom(room._id)">
+                                            ng-click="confirmRoomReserve(roomNo, selectedDate,slot)">
+                                        <i class="icon ion-android-calendar placeholder-icon"></i>
                                         Reserve
                                     </button>
                                 </div>

@@ -16,24 +16,30 @@
     <ion-header-bar class="bar-stable">
       <h1 class="title">Menu</h1>
     </ion-header-bar>
-    <ion-content>
+    <ion-content ng-controller="LoginCtrl">
       <ion-list>
           <ion-item menu-close href="#/app/home">
+            <i class="icon ion-home placeholder-icon"></i>
           Home
         </ion-item>
         <ion-item menu-close href="#/app/profile">
+          <i class="icon ion-person placeholder-icon"></i>
           Profile
         </ion-item>
         <ion-item menu-close href="#/app/labs">
+          <i class="icon ion-monitor placeholder-icon"></i>
           Lab Information
         </ion-item>
         <ion-item menu-close href="#/app/library">
+          <i class="icon ion-easel placeholder-icon"></i>
           Reserve Study Room
         </ion-item>
-        <ion-item menu-close href="#/app/samenu">
+        <ion-item menu-close href="#/app/samenu" ng-show="$root.showSAMenu">
+          <i class="icon ion-earth placeholder-icon"></i>
           SA Menu
         </ion-item>
 		  <ion-item menu-close href="#/app/contactus">
+            <i class="icon ion-help-circled placeholder-icon"></i>
           Contact Us
         </ion-item>
       </ion-list>

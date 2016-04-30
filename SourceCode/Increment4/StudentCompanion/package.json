@@ -4,6 +4,7 @@
   "description": "StudentCompanion: An Ionic project",
   "dependencies": {
     "angular-momentjs": "^0.2.2",
+    "angularjs-toaster": "^2.0.0",
     "bcrypt": "^0.7.8",
     "datepicker-for-ionic": "^1.1.7",
     "gulp": "^3.5.6",

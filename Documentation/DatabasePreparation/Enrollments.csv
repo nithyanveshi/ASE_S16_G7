@@ -1,13 +1,10 @@
-ID,Profile_ID,Courses_ID,RoomAddress
-1,1,1,Royall Hall - Rm 00104
-2,1,2,MNLC-Rm 451
-3,1,3,MNLC-Rm 452
-4,2,1,Royall Hall - Rm 00104
-5,2,2,MNLC-Rm 451
-6,2,3,MNLC-Rm 452
-7,3,1,Royall Hall - Rm 00104
-8,3,2,MNLC-Rm 451
-9,3,3,MNLC-Rm 452
-10,4,1,Royall Hall - Rm 00104
-11,4,2,MNLC-Rm 451
-12,4,3,MNLC-Rm 452
+SSO,RoomAddress,CourseID,CourseName,Semester,Year,Professor,CourseDays,CourseHours
+SC9V9,Royall Hall - Rm 00104,CS5551,Advanced Software Engineering,Spring,2016,Dr. Lee,"Tue,Thu",11:30-12:45
+SC9V9,MNLC-Rm 451,CS5552A,Formal Software Specification,Spring,2016,Dr. Han,"Mon,Wed",17:30-18:45
+SC9V9,MNLC-Rm 452,CSEE5110,Network Architecture I,Spring,2016,Dr. Choi,"Tue,Thu",14:30-15:45
+TGWW4,Royall Hall - Rm 00104,CS5551,Advanced Software Engineering,Spring,2016,Dr. Lee,"Tue,Thu",11:30-12:45
+TGWW4,MNLC-Rm 451,CS5552A,Formal Software Specification,Spring,2016,Dr. Han,"Mon,Wed",17:30-18:45
+TGWW4,MNLC-Rm 452,CSEE5110,Network Architecture I,Spring,2016,Dr. Choi,"Tue,Thu",14:30-15:45
+RMYB9,Royall Hall - Rm 00104,CS5551,Advanced Software Engineering,Spring,2016,Dr. Lee,"Tue,Thu",11:30-12:45
+RMYB9,MNLC-Rm 451,CS5552A,Formal Software Specification,Spring,2016,Dr. Han,"Mon,Wed",17:30-18:45
+RMYB9,MNLC-Rm 452,CSEE5110,Network Architecture I,Spring,2016,Dr. Choi,"Tue,Thu",14:30-15:45

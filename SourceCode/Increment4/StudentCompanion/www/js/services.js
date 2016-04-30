@@ -54,16 +54,46 @@ angular.module('starter.services', [])
             },
             getLibraryDetails: function (form) {
                 console.log("SSO from services.js: " + form.SSO);
-                return $http.post(base+'/library', form);//, {
-                //    method: 'GET',
-                //    params: {
-                //        token: form.SSO
-                //    }
-                //});
+                return $http.post(base+'/library', form);
             },
             getHolidays: function (form) {
                 console.log("services.js: SSO from getHolidays: " + form.SSO);
                 return $http.post(base+'/getHolidays', form);
+            },
+	    	getProfileDetails: function(form){
+				console.log("services.js: SSO from getProfileDetails: " + form.SSO);
+				return $http.post(base+'/profile', form);
+			},
+            
+            registerUser:function(form){
+                console.log("services.js: SSO from registerUser: " + form.SSO);
+				return $http.post(base+'/registerUser', form);
+            },
+            getLibRoomsList: function (form) {
+            console.log("SSO from services.js: " + form.SSO);
+            return $http.post(base+'/libRoomsList', form);
+          },
+            editUserProfile: function(form) {
+              console.log("services.js: SSO from editUserProfile:" + form.SSO);
+                return $http.post(base+'/editUserProfile',form);
+            },
+            editUserPassword: function(form) {
+              console.log("services.js: SSO from editUserPassword:" + form.SSO);
+                return $http.post(base+'/editUserPassword',form);
+            },
+            updateFullShift: function (form) {
+                console.log("services.js: SSO from getHolidays: " + form.SSO);
+                return $http.post(base+'/updateFullShift', form);
+            },
+            updateOwnerFullShift: function (form) {
+                return $http.post(base+'/updateOwnerFullShift', form);
+            },
+            insertHalfShift: function (form) {
+                return $http.post(base+'/insertHalfShift', form);
+            },
+            getDues: function (form) {
+                console.log("services.js: SSO from getDues: " + form.SSO);
+                return $http.post(base+'/getDues', form);
             },
 			getProfileDetails: function(form){
 				console.log("services.js: SSO from getProfileDetails: " + form.SSO);
@@ -87,6 +117,16 @@ angular.module('starter.services', [])
                 console.log("services.js: SSO from cacheUserProfile: " + form.SSO);
                 return $http.post(base+'/cacheUserProfile', form);
             },
+            getEnrollments: function (form) {
+                console.log("services.js: SSO from cacheUserProfile: " + form.SSO);
+                return $http.post(base+'/getEnrollments', form);
+            },
+            getLibraryHours: function (form) {
+                console.log("services.js: SSO from getLibraryHours: " + form.SSO);
+                console.log("services.js: Date from getLibraryHours: " + form.selectedDate);
+                return $http.post(base+'/getLibraryHours', form);
+
+            },
             newRoomReservation: function (form) {
                 console.log("services.js: SSO from newRoomReservation: " + form.Login_ID);
                 return $http.post(base+'/newRoomReservation', form);
@@ -109,6 +149,15 @@ angular.module('starter.services', [])
 	    getShiftDetails: function (form) {
                 console.log("SSO from services.js: " + form.SSO);
                 return $http.post(base+'/shifts', form);//, {
+                //    method: 'GET',
+                //    params: {
+                //        token: form.SSO
+            //    }
+                //});
+            },
+            getSubDetails: function (form) {
+                console.log("SSO from services.js: " + form.SSO);
+                return $http.post(base+'/subs', form);//, {
                 //    method: 'GET',
                 //    params: {
                 //        token: form.SSO

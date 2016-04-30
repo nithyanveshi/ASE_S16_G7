@@ -1,0 +1,43 @@
+<ion-view view-title="Take SA Shift">
+    <ion-nav-buttons side="right" ng-show="false">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content  ng-controller="SamenuCtrl">
+        <!--<div class="col">-->
+            <!--<div class="col text-center"><h5><strong>Shift Location: </strong>{{shiftPostedLoc}}</h5></div>-->
+                <!--<div class="col text-center"><h5><strong>Shift Date: </strong>{{shiftPostedDate}}</h5></div>-->
+                    <!--<div class="col text-center"><h5><strong>Shift Timings: </strong>{{shiftPostedStHr}} - {{shiftPostedEnHr}}</h5></div>-->
+                        <!--<div class="col text-center"><h5><strong>Shift Posted By: </strong>{{shiftPostedBy}}</h5></div>-->
+            <div>
+                <h6>Shift Location: {{shiftPostedLoc}}</h6>
+                <h6>Shift Date:  {{shiftPostedDate}}</h6>
+                <h6>Shift Timings: {{shiftPostedStHr}} - {{shiftPostedEnHr}}</h6>
+                <h6>Shift Posted By: {{shiftPostedBy}}</h6>
+            </div>
+            <div>From:
+            <select name="startHrs" id="startHrs" ng-options="hr for hr in startHrs track by hr" ng-model="stHrs"></select>
+            </div>
+        <div>To:
+            <select name="endHours" id="endHours" ng-options="hr for hr in endHrs track by hr" ng-model="enHrs"></select>
+        </div>
+        <button class="button button-royal" ng-click="confirmTakeShift(stHrs, enHrs)">
+            Confirm
+        </button>
+            <!--<dl class="dl-horizontal">-->
+                <!--<dt>Shift Location:</dt>-->
+                <!--<dd>{{shiftPostedLoc}}</dd>-->
+                <!--<dt>Shift Date:</dt>-->
+                <!--<dd>{{shiftPostedDate}}</dd>-->
+            <!--</dl>-->
+            <!--<div class="row">-->
+                <!--<div class="col col-40">Shift Location: </div>-->
+                <!--<div class="col col-20">{{shiftPostedLoc}}</div>-->
+            <!--</div>-->
+            <!--<div class="row">-->
+                <!--<div class="col col-40">Shift Date: </div>-->
+                <!--<div class="col col-20">{{shiftPostedDate}}</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    </ion-content>
+</ion-view>
