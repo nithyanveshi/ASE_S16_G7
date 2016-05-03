@@ -20,11 +20,11 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                 if (data != null) {
                     console.log("Valid credentials from controller");
                     $rootScope.setToken(data.SSO); // create a session kind of thing on the client side
-                    $scope.$root.showSAMenu=false;
+                    $scope.$root.showSAMenu = false;
 
                     localStorage.setItem("IsSA", data.IsSA);
                     console.log("IsSA: " + data.IsSA);
-                    if(data.IsSA == 0) {
+                    if (data.IsSA == 0) {
                         $scope.$root.showSAMenu = false;
                     }
                     else {
@@ -68,19 +68,19 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                 //$ionicLoading.hide();
                 $ionicHistory.clearCache();
                 $ionicHistory.clearHistory();
-                $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
+                $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
                 $state.go('login');
             }, 300);
             //$state.go('login');
         };
 
-	$scope.updateprofile=function(){
-    $state.go('app.editprofile');
-};
-    $scope.updatepassword=function(){
-        $state.go('app.editpassword');
-    };
-    
+        $scope.updateprofile = function () {
+            $state.go('app.editprofile');
+        };
+        $scope.updatepassword = function () {
+            $state.go('app.editpassword');
+        };
+
         // Perform the login action when the user submits the login form
         $scope.doLogin = function () {
             console.log('Doing login');
@@ -125,44 +125,46 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                 $scope.enrollments = data;
                 $scope.notif = [];
                 $scope.semYr = data[0].Semester + " " + data[0].Year;
-                var k=0;
+                var k = 0;
                 var wod = $filter('date')(new Date(), 'EEE');
-                for(var i=0; i<data.length; i++) {
+                for (var i = 0; i < data.length; i++) {
                     var subjDay = data[i].CourseDays.split(",");
                     var isClassToday = "false";
                     console.log("CourseID: " + data[i].CourseID + ", SubjDay1: " + subjDay[0] + ", SubjDay2: " + subjDay[1]);
-                    for(var j=0; j<subjDay.length; j++) {
-                        if(wod == subjDay[j]) {
+                    for (var j = 0; j < subjDay.length; j++) {
+                        if (wod == subjDay[j]) {
                             isClassToday = "true";
                             var dt = $filter('date')(new Date(), 'MM-dd-yyyy');
                             var subjStartHr = data[i].CourseHours.split("-")[0];
                             var currTime = new Date();
                             var todaySubjTime = new Date(dt + " " + subjStartHr);
                             console.log("todaySubjTime: " + todaySubjTime);
-                            if(todaySubjTime < currTime) {
+                            if (todaySubjTime < currTime) {
                                 console.log("No upcoming classes");
                                 $scope.noUpcomingClassMsg = "You do not have any upcoming classes today!!!";
                                 continue;
                             }
                             else {
+                                isClassToday = "true";
                                 var timeDiff = todaySubjTime - currTime;
                                 console.log("timeDiff: " + timeDiff);
-                                var timeDiffInMins = timeDiff/60000;
+                                var timeDiffInMins = timeDiff / 60000;
                                 console.log("timeDiffInMins: " + timeDiffInMins);
-                                var timeDiffHrs = Math.ceil(timeDiffInMins/60);
-                                var timeDiffMins = parseInt(timeDiffInMins%60);
+                                var timeDiffHrs = Math.ceil(timeDiffInMins / 60);
+                                var timeDiffMins = parseInt(timeDiffInMins % 60);
                                 $scope.notif[k] = "You have " + data[i].CourseID + " class by " + data[i].Professor
-                                    + " in the next " + timeDiffHrs +" hours and " + timeDiffMins + " minutes"
+                                    + " in the next " + timeDiffHrs + " hours and " + timeDiffMins + " minutes"
+
                                 k++;
                             }
                         }
-                        if(isClassToday == "false") {
-                            $scope.noUpcomingClassMsg = "You do not have any upcoming classes today!!!";
-                        }
+                        //if (isClassToday == "false") {
+                        //    $scope.noUpcomingClassMsg = "You do not have any upcoming classes today!!!";
+                        //}
                     }
                 }
-                if($scope.notif.length !=0) {
-                    for(k=0; k<$scope.notif.length; k++) {
+                if ($scope.notif.length != 0) {
+                    for (k = 0; k < $scope.notif.length; k++) {
                         console.log($scope.notif[k]);
                     }
                 }
@@ -188,10 +190,10 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
             year: $filter('date')(new Date(), 'yyyy')
         }).success(function (data) {
             $scope.dues = [];
-            for(var i=0; i<data.length; i++) {
+            for (var i = 0; i < data.length; i++) {
                 var dt = new Date();
                 var dueDate = new Date(data[i].DueDate);
-                if(dueDate>=dt) {
+                if (dueDate >= dt) {
                     $scope.dues[i] = data[i];
                 }
             }
@@ -206,12 +208,11 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
         });
     })
 
-    .controller('SamenuCtrl', function($scope, $state, $rootScope, $stateParams, API,ionicDatePicker, $filter, $window) {
+    .controller('SamenuCtrl', function ($scope, $state, $rootScope, $stateParams, API, ionicDatePicker, $filter, $window) {
         //$window.location.reload(true);
 
         var SSO = localStorage.getItem("token");
         console.log("SSO from SamenuCtrl: " + SSO);
-
 
 
         $scope.indexToShow = 0;
@@ -232,6 +233,17 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
             localStorage.setItem("shiftPostedLoc", location);
             $state.go('app.takeShift');
         };
+        $scope.postShift = function (shiftID, profile_ID, date, start, end, location) {
+            console.log("controllers.js: SamenuCtrl: Shift ID is: " + shiftID);
+            localStorage.setItem("shiftPostedID", shiftID);
+            localStorage.setItem("shiftOwner", profile_ID);
+            localStorage.setItem("shiftPostedDate", date);
+            localStorage.setItem("shiftPostedStHr", start);
+            localStorage.setItem("shiftPostedEnHr", end);
+            localStorage.setItem("shiftPostedLoc", location);
+            console.log(shiftID + " " + profile_ID + " " + date + " " + start + " " + end + " " + location);
+            $state.go('app.postShift');
+        };
 
 
         $scope.openDatePickerTwo = function (val) {
@@ -243,21 +255,20 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                     $scope.selectedDateInSec = val;
                     console.log("Date format: " + $scope.selectedDate);
                     console.log("Selected Date In Sec: " + $scope.selectedDateInSec);
-                   // $scope.shiftDetails = localStorage.getItem("roomNo");
+                    // $scope.shiftDetails = localStorage.getItem("roomNo");
                     console.log("Selected Room: " + $scope.shiftDetails);
                     //$scope.selectedDate1 = new Date(val);
 
-                    if($scope.selectedDateInSec != undefined) {
+                    if ($scope.selectedDateInSec != undefined) {
                         API.getShiftDetails({
                             SSO: SSO,
                             selectedDate: $scope.selectedDate,
-                           // selectedRoomNo: $scope.roomNo
+                            // selectedRoomNo: $scope.roomNo
                         }).success(function (data) {
-                            if(data != undefined) {
+                            if (data != undefined) {
                                 console.log("Valid Shift details from controller");
                                 console.log("Data Shift Details: " + JSON.stringify(data.shiftDetails));
                                 $scope.shiftDetails = data;
-
 
 
                             }
@@ -281,12 +292,12 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                         selectedDate: $scope.selectedDate,
                         // selectedRoomNo: $scope.roomNo
                     }).success(function (data) {
-                        if(data != undefined) {
-                          console.log("Valid Substitutions from controller "+JSON.stringify(data));
+                        if (data != undefined) {
+                            console.log("Valid Substitutions from controller " + JSON.stringify(data));
                             //console.log("Data Substitutions " + data.subDetails);
                             $scope.subDetails = data;
                             //$rootScope.hide();
-                            console.log("Valid Substitutions from controller subDetails: "+JSON.stringify($scope.subDetails));
+                            console.log("Valid Substitutions from controller subDetails: " + JSON.stringify($scope.subDetails));
 
                         }
                         else {
@@ -305,310 +316,607 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
                     });
 
                 }
-               /* disabledDates: $scope.disabledDates,
-                from: $filter('date')(new Date(), 'yyyy-MM-dd'),
-                to: new Date(2022, 10, 30),
-                inputDate: new Date(),
-                mondayFirst: true,
-                disableWeekdays: [0],
-                closeOnSelect: true,
-                templateType: 'popup'*/
+                /* disabledDates: $scope.disabledDates,
+                 from: $filter('date')(new Date(), 'yyyy-MM-dd'),
+                 to: new Date(2022, 10, 30),
+                 inputDate: new Date(),
+                 mondayFirst: true,
+                 disableWeekdays: [0],
+                 closeOnSelect: true,
+                 templateType: 'popup'*/
             };
             ionicDatePicker.openDatePicker(ipObj1);
             console.log("Date value is: " + $scope.selectedDate);
         };
     })
 
-.controller('TakeShiftCtrl', function ($scope, $state, toaster, $rootScope, $stateParams, API, $ionicHistory, ionicDatePicker, $filter, $window) {
-    $scope.shiftPostedBy = localStorage.getItem("shiftPostedBy");
-    $scope.shiftPostedDate = localStorage.getItem("shiftPostedDate");
-    $scope.shiftPostedStHr = localStorage.getItem("shiftPostedStHr");
-    $scope.shiftPostedEnHr = localStorage.getItem("shiftPostedEnHr");
-    $scope.shiftPostedLoc = localStorage.getItem("shiftPostedLoc");
-    $scope.shiftPostedID = localStorage.getItem("shiftPostedID");
-    $scope.SSO = localStorage.getItem("SSO");
-    $scope.ownerStHrs = $scope.shiftPostedStHr;
-    console.log("ShiftPostedID: " + $scope.shiftPostedID);
+    .controller('TakeShiftCtrl', function ($scope, $state, toaster, $rootScope, $stateParams, API, $ionicHistory, ionicDatePicker, $filter, $window) {
+        $scope.shiftPostedBy = localStorage.getItem("shiftPostedBy");
+        $scope.shiftPostedDate = localStorage.getItem("shiftPostedDate");
+        $scope.shiftPostedStHr = localStorage.getItem("shiftPostedStHr");
+        $scope.shiftPostedEnHr = localStorage.getItem("shiftPostedEnHr");
+        $scope.shiftPostedLoc = localStorage.getItem("shiftPostedLoc");
+        $scope.shiftPostedID = localStorage.getItem("shiftPostedID");
+        $scope.SSO = localStorage.getItem("SSO");
+        $scope.ownerStHrs = $scope.shiftPostedStHr;
+        console.log("ShiftPostedID: " + $scope.shiftPostedID);
 
-    $scope.startHrs = [];
-    $scope.endHrs = [];
-    var index=0;
-    for(var i=parseInt($scope.shiftPostedStHr); i<parseInt($scope.shiftPostedEnHr); i++) {
-        $scope.startHrs[index] = i;
-        index++;
-    }
-    index = 0;
-    for(var i=parseInt($scope.shiftPostedStHr)+1; i<=parseInt($scope.shiftPostedEnHr); i++) {
-        $scope.endHrs[index] = i;
-        index++;
-    }
-    for(var j=0; j<index; j++) {
-        console.log("Start: " + $scope.startHrs[j] + ", End: " + $scope.endHrs[j]);
-    }
-    $scope.subType = "full";
-    $scope.confirmTakeShift = function (stHrs, enHrs) {
-        if(stHrs == parseInt($scope.shiftPostedStHr)) {
-            if (enHrs == parseInt($scope.shiftPostedEnHr)) {
-                console.log("Full shift has been taken");
-                $scope.subType = "full";
+        $scope.startHrs = [];
+        $scope.endHrs = [];
+        var index = 0;
+        for (var i = parseInt($scope.shiftPostedStHr); i < parseInt($scope.shiftPostedEnHr); i++) {
+            $scope.startHrs[index] = i;
+            index++;
+        }
+        index = 0;
+        for (var i = parseInt($scope.shiftPostedStHr) + 1; i <= parseInt($scope.shiftPostedEnHr); i++) {
+            $scope.endHrs[index] = i;
+            index++;
+        }
+        for (var j = 0; j < index; j++) {
+            console.log("Start: " + $scope.startHrs[j] + ", End: " + $scope.endHrs[j]);
+        }
+        $scope.subType = "full";
+        $scope.confirmTakeShift = function (stHrs, enHrs) {
+            if (stHrs == parseInt($scope.shiftPostedStHr)) {
+                if (enHrs == parseInt($scope.shiftPostedEnHr)) {
+                    console.log("Full shift has been taken");
+                    $scope.subType = "full";
+                    $scope.userStHrs = stHrs + ":00";
+                    $scope.userEnHrs = enHrs + ":00";
+                    console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                }
+                else if (enHrs != parseInt($scope.shiftPostedEnHr)) {
+                    console.log("First Half taken");
+                    $scope.subType = "firstHalf";
+                    $scope.userStHrs = stHrs + ":00";
+                    $scope.userEnHrs = enHrs + ":00";
+                    $scope.ownerStHrs = enHrs + ":00";
+                    $scope.ownerEnHrs = $scope.shiftPostedEnHr;
+                    console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                    console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " + $scope.ownerEnHrs);
+                }
+            }
+            else if (enHrs == parseInt($scope.shiftPostedEnHr)) {
+                console.log("Second Half taken");
                 $scope.userStHrs = stHrs + ":00";
                 $scope.userEnHrs = enHrs + ":00";
-                console.log("User Shift: Start: " + $scope.userStHrs + "End: " +$scope.userEnHrs);
+                $scope.ownerStHrs = $scope.shiftPostedStHr;
+                $scope.ownerEnHrs = stHrs + ":00";
+                $scope.subType = "secondHalf";
+                console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " + $scope.ownerEnHrs);
             }
             else if (enHrs != parseInt($scope.shiftPostedEnHr)) {
-                console.log("First Half taken");
-                $scope.subType = "firstHalf";
+                console.log("Middle half taken");
+                $scope.subType = "middleHalf";
                 $scope.userStHrs = stHrs + ":00";
                 $scope.userEnHrs = enHrs + ":00";
-                $scope.ownerStHrs = enHrs + ":00";
-                $scope.ownerEnHrs = $scope.shiftPostedEnHr;
-                console.log("User Shift: Start: " + $scope.userStHrs + "End: " +$scope.userEnHrs);
-                console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " +$scope.ownerEnHrs);
+                $scope.ownerStHrs1 = $scope.shiftPostedStHr;
+                $scope.ownerEnHrs1 = stHrs + ":00";
+                $scope.ownerStHrs2 = enHrs + ":00";
+                $scope.ownerEnHrs2 = $scope.shiftPostedEnHr;
+                console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                console.log("Owner Shift1: Start: " + $scope.ownerStHrs1 + "End: " + $scope.ownerEnHrs1);
+                console.log("Owner Shift2: Start: " + $scope.ownerStHrs2 + "End: " + $scope.ownerEnHrs2);
             }
-        }
-        else if(enHrs == parseInt($scope.shiftPostedEnHr)) {
-            console.log("Second Half taken");
-            $scope.userStHrs = stHrs + ":00";
-            $scope.userEnHrs = enHrs + ":00";
-            $scope.ownerStHrs = $scope.shiftPostedStHr;
-            $scope.ownerEnHrs = stHrs + ":00";
-            $scope.subType = "secondHalf";
-            console.log("User Shift: Start: " + $scope.userStHrs + "End: " +$scope.userEnHrs);
-            console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " +$scope.ownerEnHrs);
-        }
-        else if(enHrs != parseInt($scope.shiftPostedEnHr)) {
-            console.log("Middle half taken");
-            $scope.subType = "middleHalf";
-            $scope.userStHrs = stHrs + ":00";
-            $scope.userEnHrs = enHrs + ":00";
-            $scope.ownerStHrs1 = $scope.shiftPostedStHr;
-            $scope.ownerEnHrs1 = stHrs + ":00";
-            $scope.ownerStHrs2 = enHrs + ":00";
-            $scope.ownerEnHrs2 = $scope.shiftPostedEnHr;
-            console.log("User Shift: Start: " + $scope.userStHrs + "End: " +$scope.userEnHrs);
-            console.log("Owner Shift1: Start: " + $scope.ownerStHrs1 + "End: " +$scope.ownerEnHrs1);
-            console.log("Owner Shift2: Start: " + $scope.ownerStHrs2 + "End: " +$scope.ownerEnHrs2);
-        }
 
-        if($scope.subType == "full") {
-            API.updateOwnerFullShift({
-                SSO: $scope.SSO,
-                ShiftPostedID: $scope.shiftPostedID
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner shift removal was successful");
-                    //$state.go('app.home');
+            if ($scope.subType == "full") {
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to remove owner shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while removing owner shift");
-                $state.go('app.home');
-            });
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
 
-            API.updateFullShift({
-                SSO: $scope.SSO,
-                Date: $scope.shiftPostedDate,
-                Start: $scope.shiftPostedStHr,
-                End: $scope.shiftPostedEnHr,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "No",
-                ISTaken: "Yes"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Shift take was successful");
-                    //$state.go('app.home');
+                API.updateFullShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.shiftPostedStHr,
+                    End: $scope.shiftPostedEnHr,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "No",
+                    IsTaken: "Yes"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift take was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to take shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to take shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while substituting the shift");
-                $state.go('app.home');
-            });
-        }
-        else if($scope.subType == "secondHalf" || $scope.subType == "firstHalf") {
-            API.updateOwnerFullShift({
-                SSO: $scope.SSO,
-                ShiftPostedID: $scope.shiftPostedID
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner shift removal was successful");
-                    //$state.go('app.home');
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
+            }
+            else if ($scope.subType == "secondHalf" || $scope.subType == "firstHalf") {
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to remove owner shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while removing owner shift");
-                $state.go('app.home');
-            });
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
 
-            API.insertHalfShift({
-                SSO: $scope.shiftPostedBy,
-                Date: $scope.shiftPostedDate,
-                Start: $scope.ownerStHrs,
-                End: $scope.ownerEnHrs,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "Yes",
-                IsTaken: "No"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner shift part update was successful");
-                    //$state.go('app.home');
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs,
+                    End: $scope.ownerEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift part update was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to owner shift part");
-                }
+                    }
+                    else {
+                        console.log("Unable to owner shift part");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while updating the owner shift");
-                $state.go('app.home');
-            });
+                }).error(function (error) {
+                    console.log("Error while updating the owner shift");
+                    $state.go('app.home');
+                });
 
-            //Inserting user half part of the shift
-            API.insertHalfShift({
-                SSO: $scope.SSO,
-                Date: $scope.shiftPostedDate,
-                Start:  $scope.userStHrs,
-                End:  $scope.userEnHrs,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "No",
-                IsTaken: "Yes"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Shift take was successful");
-                    //$state.go('app.home');
+                //Inserting user half part of the shift
+                API.insertHalfShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.userStHrs,
+                    End: $scope.userEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "No",
+                    IsTaken: "Yes"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift take was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to take shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to take shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while substituting the shift");
-                $state.go('app.home');
-            });
-        }
-        else if($scope.subType == "middleHalf") {
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
+            }
+            else if ($scope.subType == "middleHalf") {
 
-            //Removing owner original shift
-            API.updateOwnerFullShift({
-                SSO: $scope.SSO,
-                ShiftPostedID: $scope.shiftPostedID
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner shift removal was successful");
-                    //$state.go('app.home');
+                //Removing owner original shift
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to remove owner shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while removing owner shift");
-                $state.go('app.home');
-            });
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
 
-            //Inserting user half part of the shift
-            API.insertHalfShift({
-                SSO: $scope.SSO,
-                Date: $scope.shiftPostedDate,
-                Start:  $scope.userStHrs,
-                End:  $scope.userEnHrs,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "No",
-                IsTaken: "Yes"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Shift take was successful");
-                    //$state.go('app.home');
+                //Inserting user half part of the shift
+                API.insertHalfShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.userStHrs,
+                    End: $scope.userEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "No",
+                    IsTaken: "Yes"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift take was successful");
+                        //$state.go('app.home');
 
-                }
-                else {
-                    console.log("Unable to take shift");
-                }
+                    }
+                    else {
+                        console.log("Unable to take shift");
+                    }
 
-            }).error(function (error) {
-                console.log("Error while substituting the shift");
-                $state.go('app.home');
-            });
 
-            //Inserting owner first half part of the shift
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
 
-            API.insertHalfShift({
-                SSO: $scope.shiftPostedBy,
-                Date: $scope.shiftPostedDate,
-                Start:  $scope.ownerStHrs1,
-                End:  $scope.ownerEnHrs1,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "Yes",
-                IsTaken: "No"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner Shift part1 update was successful");
-                    //$state.go('app.home');
+                //Inserting owner first half part of the shift
 
-                }
-                else {
-                    console.log("Unable to update Owner Shift part1");
-                }
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs1,
+                    End: $scope.ownerEnHrs1,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner Shift part1 update was successful");
+                        //$state.go('app.home');
 
-            }).error(function (error) {
-                console.log("Error while updating Owner Shift part1");
-                $state.go('app.home');
-            });
+                    }
+                    else {
+                        console.log("Unable to update Owner Shift part1");
+                    }
 
-            //Inserting owner second half part of the shift
+                }).error(function (error) {
+                    console.log("Error while updating Owner Shift part1");
+                    $state.go('app.home');
+                });
 
-            API.insertHalfShift({
-                SSO: $scope.shiftPostedBy,
-                Date: $scope.shiftPostedDate,
-                Start:  $scope.ownerStHrs2,
-                End:  $scope.ownerEnHrs2,
-                Location: $scope.shiftPostedLoc,
-                IsSubstitution: "Yes",
-                IsTaken: "No"
-            }).success(function (data) {
-                if (data != null) {
-                    $scope.validUser = "true";
-                    console.log("Owner Shift part2 insert was successful");
-                    //$state.go('app.home');
+                //Inserting owner second half part of the shift
 
-                }
-                else {
-                    console.log("Unable to update Owner Shift part2");
-                }
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs2,
+                    End: $scope.ownerEnHrs2,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner Shift part2 insert was successful");
+                        //$state.go('app.home');
 
-            }).error(function (error) {
-                console.log("Error while updating Owner Shift part2");
-                $state.go('app.home');
-            });
+                    }
+                    else {
+                        console.log("Unable to update Owner Shift part2");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while updating Owner Shift part2");
+                    $state.go('app.home');
+                });
+
+            }
+            toaster.pop('success', "Success", "Shift is taken!!!");
+            $state.go('app.samenu');
 
         }
-        $state.go('app.samenu');
-
-    }
 
 
-})
+    })
+
+    .controller('PostShiftCtrl', function ($scope, $state, toaster, $rootScope, $stateParams, API, $ionicHistory, ionicDatePicker, $filter, $window) {
+        $scope.shiftOwner = localStorage.getItem("shiftOwner");
+        $scope.shiftPostedDate = localStorage.getItem("shiftPostedDate");
+        $scope.shiftPostedStHr = localStorage.getItem("shiftPostedStHr");
+        $scope.shiftPostedEnHr = localStorage.getItem("shiftPostedEnHr");
+        $scope.shiftPostedLoc = localStorage.getItem("shiftPostedLoc");
+        $scope.shiftPostedID = localStorage.getItem("shiftPostedID");
+        $scope.SSO = localStorage.getItem("SSO");
+        $scope.ownerStHrs = $scope.shiftPostedStHr;
+        console.log("ShiftPostedID: " + $scope.shiftPostedID);
+
+        $scope.startHrs = [];
+        $scope.endHrs = [];
+        var index = 0;
+        for (var i = parseInt($scope.shiftPostedStHr); i < parseInt($scope.shiftPostedEnHr); i++) {
+            $scope.startHrs[index] = i;
+            index++;
+        }
+        index = 0;
+        for (var i = parseInt($scope.shiftPostedStHr) + 1; i <= parseInt($scope.shiftPostedEnHr); i++) {
+            $scope.endHrs[index] = i;
+            index++;
+        }
+        for (var j = 0; j < index; j++) {
+            console.log("Start: " + $scope.startHrs[j] + ", End: " + $scope.endHrs[j]);
+        }
+        $scope.subType = "full";
+        $scope.confirmTakeShift = function (stHrs, enHrs) {
+            if (stHrs == parseInt($scope.shiftPostedStHr)) {
+                if (enHrs == parseInt($scope.shiftPostedEnHr)) {
+                    console.log("Full shift has been posted");
+                    $scope.subType = "full";
+                    $scope.userStHrs = stHrs + ":00";
+                    $scope.userEnHrs = enHrs + ":00";
+                    console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                }
+                else if (enHrs != parseInt($scope.shiftPostedEnHr)) {
+                    console.log("First Half posted");
+                    $scope.subType = "firstHalf";
+                    $scope.userStHrs = stHrs + ":00";
+                    $scope.userEnHrs = enHrs + ":00";
+                    $scope.ownerStHrs = enHrs + ":00";
+                    $scope.ownerEnHrs = $scope.shiftPostedEnHr;
+                    console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                    console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " + $scope.ownerEnHrs);
+                }
+            }
+            else if (enHrs == parseInt($scope.shiftPostedEnHr)) {
+                console.log("Second Half taken");
+                $scope.userStHrs = stHrs + ":00";
+                $scope.userEnHrs = enHrs + ":00";
+                $scope.ownerStHrs = $scope.shiftPostedStHr;
+                $scope.ownerEnHrs = stHrs + ":00";
+                $scope.subType = "secondHalf";
+                console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                console.log("Owner Shift: Start: " + $scope.ownerStHrs + "End: " + $scope.ownerEnHrs);
+            }
+            else if (enHrs != parseInt($scope.shiftPostedEnHr)) {
+                console.log("Middle half taken");
+                $scope.subType = "middleHalf";
+                $scope.userStHrs = stHrs + ":00";
+                $scope.userEnHrs = enHrs + ":00";
+                $scope.ownerStHrs1 = $scope.shiftPostedStHr;
+                $scope.ownerEnHrs1 = stHrs + ":00";
+                $scope.ownerStHrs2 = enHrs + ":00";
+                $scope.ownerEnHrs2 = $scope.shiftPostedEnHr;
+                console.log("User Shift: Start: " + $scope.userStHrs + "End: " + $scope.userEnHrs);
+                console.log("Owner Shift1: Start: " + $scope.ownerStHrs1 + "End: " + $scope.ownerEnHrs1);
+                console.log("Owner Shift2: Start: " + $scope.ownerStHrs2 + "End: " + $scope.ownerEnHrs2);
+            }
+
+            if ($scope.subType == "full") {
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
+
+                API.updateFullShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.shiftPostedStHr,
+                    End: $scope.shiftPostedEnHr,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift post was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to post shift");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
+            }
+            else if ($scope.subType == "secondHalf" || $scope.subType == "firstHalf") {
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
+
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs,
+                    End: $scope.ownerEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift part update was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to owner shift part");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while updating the owner shift");
+                    $state.go('app.home');
+                });
+
+                //Inserting user half part of the shift
+                API.insertHalfShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.userStHrs,
+                    End: $scope.userEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "No",
+                    IsTaken: "Yes"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift post was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to post shift");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
+            }
+            else if ($scope.subType == "middleHalf") {
+
+                //Removing owner original shift
+                API.updateOwnerFullShift({
+                    SSO: $scope.SSO,
+                    ShiftPostedID: $scope.shiftPostedID
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner shift removal was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to remove owner shift");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while removing owner shift");
+                    $state.go('app.home');
+                });
+
+                //Inserting user half part of the shift
+                API.insertHalfShift({
+                    SSO: $scope.SSO,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.userStHrs,
+                    End: $scope.userEnHrs,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "No",
+                    IsTaken: "Yes"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Shift post was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to post shift");
+                    }
+
+
+                }).error(function (error) {
+                    console.log("Error while substituting the shift");
+                    $state.go('app.home');
+                });
+
+                //Inserting owner first half part of the shift
+
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs1,
+                    End: $scope.ownerEnHrs1,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner Shift part1 update was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to update Owner Shift part1");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while updating Owner Shift part1");
+                    $state.go('app.home');
+                });
+
+                //Inserting owner second half part of the shift
+
+                API.insertHalfShift({
+                    SSO: $scope.shiftPostedBy,
+                    Date: $scope.shiftPostedDate,
+                    Start: $scope.ownerStHrs2,
+                    End: $scope.ownerEnHrs2,
+                    Location: $scope.shiftPostedLoc,
+                    IsSubstitution: "Yes",
+                    IsTaken: "No"
+                }).success(function (data) {
+                    if (data != null) {
+                        $scope.validUser = "true";
+                        console.log("Owner Shift part2 insert was successful");
+                        //$state.go('app.home');
+
+                    }
+                    else {
+                        console.log("Unable to update Owner Shift part2");
+                    }
+
+                }).error(function (error) {
+                    console.log("Error while updating Owner Shift part2");
+                    $state.go('app.home');
+                });
+
+            }
+            toaster.pop('success', "Success", "Shift is taken!!!");
+            $state.go('app.samenu');
+
+        }
+
+
+    })
+
+
     .controller('LoginCtrl', function ($scope, $state, $http, $window, $httpParamSerializerJQLike, $timeout, API, $rootScope) {
 
         $scope.loginData = {};
@@ -668,57 +976,56 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
 
             console.log("controllers.js: LoginCtrl: validLogin: " + $scope.validUser);
             //if($scope.validUser == "true") {
-                API.cacheUserProfile({
-                    SSO: sso
-                }).success(function (data) {
-                    if (data != null) {
-                        console.log("Valid credentials from controller");
-                        $rootScope.setToken(data.SSO); // create a session kind of thing on the client side
-                        $rootScope.showSAMenu="false";
-                        localStorage.setItem("SSO", data.SSO);
-                        localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
-                        localStorage.setItem("FirstName", data.FirstName);
-                        localStorage.setItem("LastName", data.LastName);
-			localStorage.setItem("DOB" , data.DOB);
-                        localStorage.setItem("Email", data.Email);
-                        localStorage.setItem("Mobile", data.Mobile);
-                        localStorage.setItem("IsSA", data.IsSA);
+            API.cacheUserProfile({
+                SSO: sso
+            }).success(function (data) {
+                if (data != null) {
+                    console.log("Valid credentials from controller");
+                    $rootScope.setToken(data.SSO); // create a session kind of thing on the client side
+                    $rootScope.showSAMenu = "false";
+                    localStorage.setItem("SSO", data.SSO);
+                    localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
+                    localStorage.setItem("FirstName", data.FirstName);
+                    localStorage.setItem("LastName", data.LastName);
+                    localStorage.setItem("DOB", data.DOB);
+                    localStorage.setItem("Email", data.Email);
+                    localStorage.setItem("Mobile", data.Mobile);
+                    localStorage.setItem("IsSA", data.IsSA);
 
-			localStorage.setItem("MobileNo", data.MobileNo);
-                        localStorage.setItem("Address1", data.Address1);
-                        localStorage.setItem("Address2", data.Address2);
-                        localStorage.setItem("City", data.City);
-                        localStorage.setItem("State", data.State);
-                        localStorage.setItem("ZipCode", data.ZipCode);
-                        console.log("First name: " + data.FirstName);
-                        console.log("Last name: " + data.LastName);
-                        console.log("Mobile: " + data.Mobile);
-                        console.log("Email: " + data.Email);
-			console.log("Address1: " + data.Address1);
-                        console.log("Address2: " + data.Address2);
-                        console.log("City: " + data.City);
-                        console.log("State: " + data.State);
-                        console.log("Zip: " + data.ZipCode);
-                        console.log("IsSA: " + data.IsSA);
-                        if(data.IsSA == 0) {
-                            $rootScope.showSAMenu = "false";
-                        }
-                        else {
-                            $rootScope.showSAMenu = "true";
-                        }
-                        console.log("controllers.js: User profile data cached");
+                    localStorage.setItem("MobileNo", data.MobileNo);
+                    localStorage.setItem("Address1", data.Address1);
+                    localStorage.setItem("Address2", data.Address2);
+                    localStorage.setItem("City", data.City);
+                    localStorage.setItem("State", data.State);
+                    localStorage.setItem("ZipCode", data.ZipCode);
+                    console.log("First name: " + data.FirstName);
+                    console.log("Last name: " + data.LastName);
+                    console.log("Mobile: " + data.Mobile);
+                    console.log("Email: " + data.Email);
+                    console.log("Address1: " + data.Address1);
+                    console.log("Address2: " + data.Address2);
+                    console.log("City: " + data.City);
+                    console.log("State: " + data.State);
+                    console.log("Zip: " + data.ZipCode);
+                    console.log("IsSA: " + data.IsSA);
+                    if (data.IsSA == 0) {
+                        $rootScope.showSAMenu = "false";
                     }
                     else {
-                        console.log("controllers.js: Unable to cache user profile");
+                        $rootScope.showSAMenu = "true";
                     }
-                    //$state.go('app.home');
+                    console.log("controllers.js: User profile data cached");
+                }
+                else {
+                    console.log("controllers.js: Unable to cache user profile");
+                }
+                //$state.go('app.home');
 
-                }).error(function (error) {
-                    console.log("controllers.js: Error in cacheUserProfile: " + error);
-                    $state.go('login');
-                });
+            }).error(function (error) {
+                console.log("controllers.js: Error in cacheUserProfile: " + error);
+                $state.go('login');
+            });
             //}
-
 
 
         }
@@ -754,153 +1061,160 @@ angular.module('starter.controllers', ['starter.services', 'ionic-datepicker', '
             $state.go('app.home');
         });
     })
-.controller('PwdEditCtrl',function($scope, $state, $http, $window, $rootScope,API,$httpParamSerializerJQLike) {
-    
-     var SSO = localStorage.getItem("token");
-     console.log("SSO from PwdEditCtrl: " + SSO);
-    $scope.updatepassword = function(password){
-        console.log('Updating user password'); 
-        API.editUserPassword({
-            SSO:SSO,
-            Password:password
-        }).success(function(data) {
-            if(data != null) {
-                console.log("Valid credentials from controller");
-                alert("Password changed successfully!");
-                $state.go('login');
-                $rootScope.setToken(data.SSO);
-                localStorage.setItem("Password",password);
-        }
-            else {
-                console.log("Controllers.js:Unable to edit user password");
-            }
-        }).error(function(error){
-            console.log("controllers.js: Error in controller: " + error);
-             $state.go('app.profile');
-        });
-    }
-})
-.controller('ProfEditCtrl', function($scope, $state, $http, $window, $rootScope,API,$httpParamSerializerJQLike) {
-    var SSO = localStorage.getItem("token");
-        console.log("SSO from ProfEditCtrl: " + SSO);
-    
-    $scope.Email= localStorage.getItem("Email");
-    
-    console.log("Email from ProfEditCtrl " + $scope.Email);
-    
-    $scope.FirstName= localStorage.getItem("FirstName");
-    $scope.LastName= localStorage.getItem("LastName");
-    $scope.DOB= localStorage.getItem("DOB");
-    $scope.MobileNo= localStorage.getItem("MobileNo");
-    $scope.Email= localStorage.getItem("Email");
-    $scope.Address1= localStorage.getItem("Address1");
-    $scope.Address2= localStorage.getItem("Address2");
-    $scope.City= localStorage.getItem("City");
-    $scope.State= localStorage.getItem("State");
-    $scope.ZipCode= localStorage.getItem("ZipCode");
-    
-        $scope.update = function(MobileNo,Address1,Address2,City,State,ZipCode) {
-            console.log('Updating user profile');  
-            API.editUserProfile({  
-                MobileNo:MobileNo,
-                Address1:Address1,
-                Address2:Address2,
-                City:City,
-                State:State,
-                ZipCode:ZipCode,
-                SSO: SSO 
+    .controller('PwdEditCtrl', function ($scope, $state, $http, $window, $rootScope, API, $httpParamSerializerJQLike, toaster) {
+
+        var SSO = localStorage.getItem("token");
+        console.log("SSO from PwdEditCtrl: " + SSO);
+        $scope.updatepassword = function (password) {
+            console.log('Updating user password');
+            API.editUserPassword({
+                SSO: SSO,
+                Password: password
             }).success(function (data) {
-                if(data != null) {
+                if (data != null) {
                     console.log("Valid credentials from controller");
-                       // $rootScope.setToken(data.SSO); 
+                    //alert("Password changed successfully!");
+                    toaster.pop('success', "Success", "Password updated successfully");
+                    $state.go('login');
+                    $rootScope.setToken(data.SSO);
+                    localStorage.setItem("Password", password);
+                }
+                else {
+                    console.log("Controllers.js:Unable to edit user password");
+                    toaster.pop('danger', "Failed", "Unable to update your password");
+                }
+            }).error(function (error) {
+                console.log("controllers.js: Error in controller: " + error);
+                $state.go('app.profile');
+            });
+        }
+    })
+    .controller('ProfEditCtrl', function ($scope, $state, $http, $window, $rootScope, API, $httpParamSerializerJQLike, toaster, $ionicHistory) {
+        var SSO = localStorage.getItem("token");
+        console.log("SSO from ProfEditCtrl: " + SSO);
+
+        $scope.Email = localStorage.getItem("Email");
+
+        console.log("Email from ProfEditCtrl " + $scope.Email);
+
+        $scope.FirstName = localStorage.getItem("FirstName");
+        $scope.LastName = localStorage.getItem("LastName");
+        $scope.DOB = localStorage.getItem("DOB");
+        $scope.MobileNo = localStorage.getItem("MobileNo");
+        $scope.Email = localStorage.getItem("Email");
+        $scope.Address1 = localStorage.getItem("Address1");
+        $scope.Address2 = localStorage.getItem("Address2");
+        $scope.City = localStorage.getItem("City");
+        $scope.State = localStorage.getItem("State");
+        $scope.ZipCode = localStorage.getItem("ZipCode");
+
+        $scope.update = function (MobileNo, Address1, Address2, City, State, ZipCode) {
+            console.log('Updating user profile');
+            API.editUserProfile({
+                MobileNo: MobileNo,
+                Address1: Address1,
+                Address2: Address2,
+                City: City,
+                State: State,
+                ZipCode: ZipCode,
+                SSO: SSO
+            }).success(function (data) {
+                if (data != null) {
+                    console.log("Valid credentials from controller");
+                    // $rootScope.setToken(data.SSO);
                     console.log("SSO inside ProfEditCtrl" + SSO);
                     // create a session kind of thing on the client side
-                    alert("Profile updated successfully!");
-                $state.go('app.home');
-                $rootScope.setToken(data.SSO);
-                     //  localStorage.setItem("FirstName", FirstName);
-                   // localStorage.setItem("LastName", LastName);
-                   // localStorage.setItem("DOB", DOB);
-                   // localStorage.setItem("Email", Email);
+                    //alert("Profile updated successfully!");
+                    toaster.pop('success', "Success", "Profile updated successfully");
+                    $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
+                    $state.go('app.home');
+                    $rootScope.setToken(data.SSO);
+                    //  localStorage.setItem("FirstName", FirstName);
+                    // localStorage.setItem("LastName", LastName);
+                    // localStorage.setItem("DOB", DOB);
+                    // localStorage.setItem("Email", Email);
                     localStorage.setItem("MobileNo", MobileNo);
                     localStorage.setItem("Address1", Address1);
                     localStorage.setItem("Address2", Address2);
                     localStorage.setItem("City", City);
                     localStorage.setItem("State", State);
                     localStorage.setItem("ZipCode", ZipCode);
-                       // localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
-                       // localStorage.setItem("FirstName",fname);
-                      //  localStorage.setItem("Password", data.password);
-                    }
-                    else {
-                        console.log("controllers.js: Unable to edit user profile");
-                    }
+                    // localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
+                    // localStorage.setItem("FirstName",fname);
+                    //  localStorage.setItem("Password", data.password);
+                }
+                else {
+                    console.log("controllers.js: Unable to edit user profile");
+                    toaster.pop('danger', "Failed", "Unable to update profile information");
+                }
 
-                }).error(function (error) {
-                    console.log("controllers.js: Error in controller: " + error);
-                    $state.go('app.profile');
+            }).error(function (error) {
+                console.log("controllers.js: Error in controller: " + error);
+                $state.go('app.profile');
             });
         }
-})
-    .controller('RegisterCtrl', function($scope, $state, $http, $window, API,$httpParamSerializerJQLike,$ionicPopup) {
-    
-$scope.pageClass = 'login';
-        $scope.login = function() {
+    })
+    .controller('RegisterCtrl', function ($scope, $state, $http, $window, API, $httpParamSerializerJQLike, $ionicPopup, toaster) {
+
+        $scope.pageClass = 'login';
+        $scope.login = function () {
             console.log("Login page !");
             $state.go('login');
         }
         $scope.pageClass = 'register';
 //$scope.dob = $filter('date')(new Date(input), 'MM-dd-yyyy');
-        $scope.register = function(FirstName,LastName,DOB,Email,SSO,Password,MobileNo,Address1,Address2,City,State,ZipCode) {
-            console.log('Registering user profile');  
-            API.registerUser({  
-               FirstName:FirstName,
-               LastName:LastName,
-               DOB:DOB,
-                SSO:SSO,
-               Email:Email,
-                MobileNo:MobileNo,
-                Address1:Address1,
-                Address2:Address2,
-                City:City,
-                State:State,
-                ZipCode:ZipCode,
+        $scope.register = function (FirstName, LastName, DOB, Email, SSO, Password, MobileNo, Address1, Address2, City, State, ZipCode) {
+            console.log('Registering user profile');
+            API.registerUser({
+                FirstName: FirstName,
+                LastName: LastName,
+                DOB: DOB,
+                SSO: SSO,
+                Email: Email,
+                MobileNo: MobileNo,
+                Address1: Address1,
+                Address2: Address2,
+                City: City,
+                State: State,
+                ZipCode: ZipCode,
                 Password: Password
             }).success(function (data) {
-                if(data != null) {
+                if (data != null) {
                     console.log("Inside RegisterCtrl");
                     var showingText = "User created successfully";
-                      var alert = $ionicPopup.alert({
-                            title: 'Alert',
-                template: showingText
-                        })
-                   // alert("User created successfully!");
-                $state.go('login');
-                //$rootScope.setToken(data.SSO);
-                    localStorage.setItem("SSO",SSO);
-                     localStorage.setItem("FirstName", FirstName);
-                    localStorage.setItem("LastName", LastName);
-                    localStorage.setItem("DOB", DOB);
-                    localStorage.setItem("Email", Email);
-                    localStorage.setItem("MobileNo", MobileNo);
-                    localStorage.setItem("Address1", Address1);
-                    localStorage.setItem("Address2", Address2);
-                    localStorage.setItem("City", City);
-                    localStorage.setItem("State", State);
-                    localStorage.setItem("ZipCode", ZipCode);
-                 //  localStorage.setItem("SSO",sso);
-                    localStorage.setItem("Password",Password);
-                       // localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
-                       // localStorage.setItem("FirstName",fname);
-                      //  localStorage.setItem("Password", data.password);
-                    }
-                    else {
-                        console.log("controllers.js: Unable to create user profile");
-                    }
-
-                }).error(function (error) {
-                    console.log("controllers.js: Error in controller: " + error);
+                    //      var alert = $ionicPopup.alert({
+                    //            title: 'Alert',
+                    //template: showingText
+                    //        })
+                    toaster.pop('success', "Success", "Registration is success");
+                    // alert("User created successfully!");
+                    //$rootScope.setToken(data.SSO);
+                    //    localStorage.setItem("SSO",SSO);
+                    //     localStorage.setItem("FirstName", FirstName);
+                    //    localStorage.setItem("LastName", LastName);
+                    //    localStorage.setItem("DOB", DOB);
+                    //    localStorage.setItem("Email", Email);
+                    //    localStorage.setItem("MobileNo", MobileNo);
+                    //    localStorage.setItem("Address1", Address1);
+                    //    localStorage.setItem("Address2", Address2);
+                    //    localStorage.setItem("City", City);
+                    //    localStorage.setItem("State", State);
+                    //    localStorage.setItem("ZipCode", ZipCode);
+                    // //  localStorage.setItem("SSO",sso);
+                    //    localStorage.setItem("Password",Password);
                     $state.go('login');
+// localStorage.setItem("FullName", data.FirstName + " " + data.LastName);
+                    // localStorage.setItem("FirstName",fname);
+                    //  localStorage.setItem("Password", data.password);
+                }
+                else {
+                    console.log("controllers.js: Unable to create user profile");
+                    toaster.pop('danger', "Failed", "Unable to register");
+                }
+
+            }).error(function (error) {
+                console.log("controllers.js: Error in controller: " + error);
+                $state.go('login');
             });
         }
     })
@@ -941,7 +1255,7 @@ $scope.pageClass = 'login';
                 if (data) {
                     console.log("controllers.js:New Room Reservation: " + JSON.stringify(data));
                     $scope.libRoomsList = data;
-                    $ionicHistory.nextViewOptions({ disableBack: true, historyRoot: true });
+                    $ionicHistory.nextViewOptions({disableBack: true, historyRoot: true});
                     $state.go('app.reservedRooms');
                     toaster.pop('success', "Success", "Reservation successful");
                 }
@@ -1079,7 +1393,7 @@ $scope.pageClass = 'login';
                     //if (data[i].isCompleted == false) {
 
                     var resDate = new Date(data[i].StartTime);
-                    if(resDate >= today) {
+                    if (resDate >= today) {
                         $scope.list.push(data[i]);
                     }
                     //}
@@ -1383,8 +1697,8 @@ $scope.pageClass = 'login';
                 template: 'Are you sure you want to cancel this room reservation?'
             });
 
-            confirmPopup.then(function(res) {
-                if(res) {
+            confirmPopup.then(function (res) {
+                if (res) {
                     console.log('You are sure');
                     API.cancelReservation({
                         SSO: SSO,
@@ -1436,10 +1750,10 @@ $scope.pageClass = 'login';
         API.getLabsList({
             SSO: SSO
         }).success(function (data) {
-            if(data != null) {
+            if (data != null) {
 //              console.log("Valid Labs details from controller"+JSON.stringify(data));
                 console.log("Valid Labs details from controller");
-                localStorage.setItem("labData", JSON.stringify(data)); 
+                localStorage.setItem("labData", JSON.stringify(data));
                 $scope.labDetails = data;
                 $rootScope.hide();
 
@@ -1458,38 +1772,39 @@ $scope.pageClass = 'login';
             $rootScope.notify("LabsCtrl: Duh, we broke");
             $state.go('app.home');
         });
-    
-        $scope.viewDetails = function(labID){
-          localStorage.setItem("labID", labID);
+
+        $scope.viewDetails = function (labID) {
+            localStorage.setItem("labID", labID);
 //          alert("Clicked lab "+labID);
             $state.go('app.labInfo');
         }
-        
+
     })
-    .controller('LabsDetailCtrl', function($scope, $stateParams) {
-            var SSO = localStorage.getItem("token");
-            var labId = localStorage.getItem("labID");
-            $scope.labID = localStorage.getItem("labID");
-            $scope.weekDays = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+    .controller('LabsDetailCtrl', function ($scope, $stateParams) {
+        var SSO = localStorage.getItem("token");
+        var labId = localStorage.getItem("labID");
+        $scope.labID = localStorage.getItem("labID");
+        $scope.weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 //          var labsInfo = localStorage.getItem("labsData");
-            var labDataInfo = JSON.parse(localStorage.getItem("labData"));
+        var labDataInfo = JSON.parse(localStorage.getItem("labData"));
 //          console.log(labDataInfo);
-            
-            $scope.labsList;
-                for (var i = 0; i < labDataInfo.length; i++) {
-                    if (labDataInfo[i].ID == labId) {
-                    $scope.labsList = labDataInfo[i];
-                    }
-                }
-    
-/*            if(SSO == undefined) {
-                $state.go('login');
+
+        $scope.labsList;
+        for (var i = 0; i < labDataInfo.length; i++) {
+            if (labDataInfo[i].ID == labId) {
+                $scope.labsList = labDataInfo[i];
             }
-            
-*/        })
+        }
+
+        /*            if(SSO == undefined) {
+         $state.go('login');
+         }
+
+         */
+    })
 
 
-    .controller('PlaylistCtrl', function($scope, $stateParams) {
+    .controller('PlaylistCtrl', function ($scope, $stateParams) {
         var SSO = localStorage.getItem("token");
         if (SSO == undefined) {
             $state.go('login');

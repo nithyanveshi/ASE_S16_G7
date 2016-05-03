@@ -543,7 +543,7 @@ server.post('/shifts', function (req, res, next) {
         console.log("Inside Shift Server " + user.SSO);
         console.log("mServer.js: Inside Shift Server  User: " + user.SSO + " SelectedDate: " + user.selectedDate);
         console.log("mServer.js: Inside Shift Server Selected Date: " + user.selectedDate);
-        db.SAShifts.find({"Profile_ID": req.params.SSO,"Date": {$regex: user.selectedDate}},function (err, data) {
+        db.SAShifts.find({"Profile_ID": req.params.SSO,"Date": {$regex: user.selectedDate}, "IsSubstitution": "No"},function (err, data) {
             if(err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'
@@ -626,7 +626,7 @@ server.post('/updateFullShift', function (req, res, next) {
         + user.End + ", Location: " + user.Location);
 
         db.SAShifts.insert({"Profile_ID": user.SSO, "Date": user.Date, "Start": user.Start, "End": user.End, "Location": user.Location,
-            "IsSubstitution": "No", "IsTaken": "Yes"}, function (err, data) {
+            "IsSubstitution": user.IsSubstitution, "IsTaken": user.IsTaken}, function (err, data) {
             if (err) {
                 res.writeHead(403, {
                     'Content-Type': 'application/json; charset=utf-8'

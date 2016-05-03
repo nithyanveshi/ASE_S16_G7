@@ -186,6 +186,15 @@ angular.module('starter', ['ionic', 'toaster', 'starter.controllers', 'starter.s
                     }
                 }
             })
+            .state('app.postShift', {
+                url: '/postShift',
+                views: {
+                    'menuContent': {
+                        templateUrl: 'templates/postShift.html',
+                        controller: 'PostShiftCtrl'
+                    }
+                }
+            })
             .state('app.single', {
                 url: '/playlists/:playlistId',
                 views: {

@@ -35,6 +35,7 @@
               <ion-list>
                 <ion-item ng-repeat="shift in shiftDetails">
                   <ion-card>
+                      <ion-card  ng-click="postShift(shift._id, shift.Profile_ID, shift.Date, shift.Start, shift.End, shift.Location)">
                     <div class="row">
                       <!--<div class="col col-10">{{shift.ID}}</div>-->
                         <div class="col">{{shift.Date}}</div>
