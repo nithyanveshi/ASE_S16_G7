@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 //var morgan = require('morgan');
 
 
-var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs', 'Holidays', 'LibraryHours', 'Enrollments', 'Dues']);
+var db = mongojs('mongodb://<userid>:<password@<serverID>:<portNumber>/<dbName>', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs', 'Holidays', 'LibraryHours', 'Enrollments', 'Dues']);
 
 var server = restify.createServer();
 
