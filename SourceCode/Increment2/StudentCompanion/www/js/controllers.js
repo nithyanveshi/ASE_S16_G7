@@ -78,7 +78,7 @@ angular.module('starter.controllers', [])
         //inside.getMethod();
         $http({
           method: 'GET',
-          url: 'https://api.mongolab.com/api/1/databases/studentcompaniondb/collections/Login?apiKey=PPjxva2p9SH3NomyxSQ6rdwiofOu1q2L',
+          url: 'https://api.mongolab.com/api/1/databases/studentcompaniondb/collections/Login?apiKey=<APIKey>',
           contentType: "application/json"
         }).success(function (response) {
           var list = response;
