@@ -4,7 +4,7 @@ var mongojs = require('mongojs');
 
 
 
-var db = mongojs('mongodb://studentcompaniondb:studentcompaniondb@ds011399.mlab.com:11399/studentcompaniondb', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs']);
+var db = mongojs('mongodb://<userid>:<password@<serverID>:<portNumber>/<dbName>', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs']);
 
 var server = restify.createServer();
 
