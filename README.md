@@ -35,9 +35,11 @@ This is an ionic hybrid application which can run on any platform. This applicat
   <li>Configure your REST API  parameters in <code>services.js</code> file. <br />
   <code>var base = "<URL to REST API server>";</code><br />
   </li>
-  <li>Configure your mongoDB connection parameters.<br />
+  <li>Configure your mongoDB connection parameters in <code>mServer.js</code>.<br />
   <code>var db = mongojs('mongodb://<userid>:<password>@<host>:<port>/<dbname>', ['Login', 'Address', 'Library', 'LibraryRooms', 'RoomReservation', 'SAShifts', 'Profile', 'Labs', 'Holidays', 'LibraryHours', 'Enrollments', 'Dues']);</code>
   </li>
+  <li>Run the <code>mServer.js</code> using <code>node</code></li>
+  <li>From application root folder, run <code>ionic serve</code> to run the application in browser</li>
 </ol>
 #Contact:
 Gmail: meetsriharsha@gmail.com
