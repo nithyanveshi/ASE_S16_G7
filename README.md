@@ -1,8 +1,8 @@
 # Student Companion
 Github repository for ASE Spring 16 project by Group 7.
 This is an ionic hybrid application which can run on any platform. This application is targetted for the students who wants to check and update thier daily activities in the universities. Documentation for this application is provided in the Documentation directory of this repository.
-
-<a href src="https://www.youtube.com/watch?v=v6NcbSS8hcQ">View Demo</a>
+<h4>Demo</h4>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/v6NcbSS8hcQ" frameborder="0" allowfullscreen></iframe>
 
 #Prerequisites:
 <ul>
