@@ -1,0 +1,4 @@
+SSO,RoomAddress,CourseID,CourseName,Semester,Year,Professor,CourseDays,CourseHours
+STRS7,Royall Hall - Rm 00104,CS5551,Advanced Software Engineering,Spring,2016,Dr. Lee,"Tue,Thu",11:30-12:45
+STRS8,MNLC-Rm 451,CS5552A,Formal Software Specification,Spring,2016,Dr. Han,"Mon,Wed",17:30-18:45
+STRS9,MNLC-Rm 452,CSEE5110,Network Architecture I,Spring,2016,Dr. Choi,"Tue,Thu",14:30-15:45

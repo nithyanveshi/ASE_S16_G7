@@ -1,0 +1,42 @@
+<ion-view view-title="Select a Room">
+    <ion-nav-buttons side="right" ng-show="true">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content>
+        <div ng-controller="LibraryCtrl">
+
+            <ion-card>
+                <ion-card-header>
+                    <div class="row">
+                        <div class="col col-30"><strong>Room No.</strong></div>
+                        <div class="col"><strong>Capacity</strong></div>
+                        <div class="col"><strong>Projector</strong></div>
+                        <div class="col"><strong>Want to Reserve?</strong></div>
+                    </div>
+                </ion-card-header>
+                <ion-list>
+                    <ion-item collection-repeat="room in libRoomsList">
+
+                        <ion-card>
+                            <div class="row">
+                                <div class="col col-30">{{room.RoomNumber}}</div>
+                                <div class="col">{{room.Capacity}}</div>
+                                <div class="col">{{room.Projector}}</div>
+                                <div class="col">
+                                    <button class="button button-small button-balanced"
+                                            ng-click="reserveRoom(room.RoomNumber)">
+                                        <i class="icon ion-android-add-circle placeholder-icon"></i>
+                                        Select
+                                    </button>
+                                </div>
+                            </div>
+                        </ion-card>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+            <!--</ionic-datepicker>-->
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,54 @@
+<ion-view view-title="User Profile">
+  <ion-nav-buttons side="right" ng-show="false">
+    <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+    </button>
+  </ion-nav-buttons>
+  <ion-content>
+    <div ng-controller="ProfileCtrl">
+      <div class = list>
+        <label class = "item">
+          <span class ="input-label"><h2><b>First name: </b>{{profileDetails.FirstName}}</h2></span>
+        </label>
+
+        <label class = "item">
+          <span class ="input-label"><h2> <b>Last Name: </b>{{profileDetails.LastName}}</h2></span>
+
+        </label>
+
+        <label class = "item">
+          <span class ="input-label"> <h2><b>DOB: </b>{{profileDetails.DOB}}</h2></span>
+        </label>
+<label class = "item">
+          <span class ="input-label"> <h2><b>Mobile: </b> {{profileDetails.MobileNo}}</h2></span>
+
+        </label>
+        <label class = "item">
+          <span class ="input-label"> <h2><b>Email: </b> {{profileDetails.Email}}</h2></span>
+
+        </label>
+          <label class = "item">
+          <span class ="input-label"> <h2><b>Address 1: </b> {{profileDetails.Address1}}</h2></span>
+
+        </label>
+          <label class = "item">
+          <span class ="input-label"> <h2><b>Address 2: </b> {{profileDetails.Address2}}</h2></span>
+
+        </label>
+          <label class = "item">
+          <span class ="input-label"> <h2><b>City : </b> {{profileDetails.City}}</h2></span>
+
+        </label>
+          <label class = "item">
+          <span class ="input-label"> <h2><b>State: </b> {{profileDetails.State}}</h2></span>
+
+        </label>
+          <label class = "item">
+          <span class ="input-label"> <h2><b>Zip: </b> {{profileDetails.ZipCode}}</h2></span>
+
+        </label>
+          <button class="button button-block button-calm" ng-click="updateprofile()"> Update personal info </button>
+          <button class="button button-block button-balanced" ng-click="updatepassword()"> Change password </button>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

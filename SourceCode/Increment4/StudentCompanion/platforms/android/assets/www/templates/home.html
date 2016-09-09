@@ -1,0 +1,98 @@
+<ion-view view-title="Student Companion">
+    <ion-nav-buttons side="right" ng-show="false">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content class="home" ng-controller="HomeCtrl">
+        <style>
+            pre{
+                white-space: pre-line;
+            }
+        </style>
+        <div><h4>{{ welcome }}</h4></div>
+
+        <!---->
+        <!--<br>-->
+        <!--<br>-->
+        <!--<br>-->
+        <!--<div>-->
+            <!--&lt;!&ndash;<button class="button button-small  button-block button-positive" type="submit" name="Logout" ng-click="logout()">Log out</button>&ndash;&gt;-->
+        <!--</div>-->
+        <h5>Class Schedule ({{semYr}})</h5>
+        <ion-card>
+            <ion-card-header>
+                <div class="row">
+                    <div class="col col-50"><center><strong>Subject</strong></center></div>
+                    <div class="col col-50"><center><strong>Details</strong></center></div>
+                </div>
+            </ion-card-header>
+            <ion-list>
+                <ion-item ng-repeat="enrollment in enrollments">
+                    <ion-card>
+                        <h5>
+                        <div class="row">
+                            <div class="col col-50"><center>{{enrollment.CourseName}}<br />{{enrollment.CourseID}}</center></div>
+                            <div class="col col-50"><center>{{enrollment.CourseDays}}  {{enrollment.CourseHours}}<br />{{enrollment.RoomAddress}}</center></div>
+                        </div>
+                    </h5>
+                    </ion-card>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <h5><strong>Notifications:</strong></h5>
+        <div class="text-info">{{noUpcomingClassMsg}}</div>
+        <div ng-repeat="notification in notif" class="text-danger">{{notification}}</div>
+        <h5>Dues: </h5>
+        <ion-card>
+            <ion-card-header>
+                <div class="row">
+                    <div class="col col-20"><center><strong>CourseID</strong></center></div>
+                    <div class="col col-40"><center><strong>Task</strong></center></div>
+                    <div class="col col-40"><center><strong>Due By</strong></center></div>
+                </div>
+            </ion-card-header>
+            <!--<ion-scroll>-->
+            <ion-list>
+                <ion-item ng-repeat="due in dues | orderBy: ['CourseID', 'DueDate']">
+                    <ion-card>
+                        <div class="row">
+                            <div class="col col-20"><h5><center>{{due.CourseID}}</center></h5></div>
+                            <div class="col col-40"><h5><center>{{due.Item}}</center></h5></div>
+                            <div class="col col-40"><h5><center>{{due.DueDate}}</center></h5></div>
+                        </div>
+                    </ion-card>
+                </ion-item>
+            </ion-list>
+            <!--</ion-scroll>-->
+        </ion-card>
+        <!--</ion-scroll>-->
+        <!--<ul ng-repeat="du in dues">-->
+            <!--<div collapse="true">-->
+            <!--<li>-->
+                <!--<span>{{du.CourseID}}</span>-->
+                <!--<span>{{du.Item}}</span>-->
+                <!--<span>{{du.Description}}</span>-->
+                <!--<span>{{du.DueDate}}</span>-->
+            <!--</li>-->
+                <!--</div>-->
+        <!--</ul>-->
+        <!--<table class="table table-bordered">-->
+            <!--<th>-->
+                <!--<td>Course ID</td>-->
+                <!--<td>Work Type</td>-->
+                <!--<td>Description</td>-->
+                <!--<td>Due Date</td>-->
+            <!--</th>-->
+            <!--&lt;!&ndash;<ion-item >&ndash;&gt;-->
+                <!--<tr ng-repeat="due in dues">-->
+                    <!--<td>{{due.CourseID}}</td>-->
+                    <!--<td>{{due.Item}}</td>-->
+                    <!--<td>{{due.Description}}</td>-->
+                    <!--<td>{{due.DueDate}}</td>-->
+                <!--</tr>-->
+
+            <!--</ion-item>-->
+            <!--</table>-->
+        <!--</ion-list>-->
+    </ion-content>
+</ion-view>

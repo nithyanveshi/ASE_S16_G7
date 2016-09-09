@@ -1,0 +1,57 @@
+<ion-view view-title="LabInfo">
+    <ion-nav-buttons side="right" ng-show="false">
+        <button class="button button-icon button-clear ion-android-exit" ng-click="logout()">
+        </button>
+    </ion-nav-buttons>
+    <ion-content >
+	<h1>Lab Details</h1>
+        
+    <div ng-controller="LabsDetailCtrl">
+    <div id="labDetails" style="text-align:left;">
+        <div class="card">
+          <div class="item item-text-wrap">
+            <h2><i class="icon ion-erlenmeyer-flask"></i> {{labsList.LabName}} </h2>
+              <h3>Capacity : 
+              &nbsp;{{labsList.InUse}}/{{labsList.Capacity}}
+              <br>Room {{labsList.Room}}
+              <br><i class="icon ion-ios-location"></i> {{labsList.Address}}
+              </h3>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="item item-text-wrap">
+            <h3 style="text-decoration:underline;">Working Hours</h3>
+            <div class="row header">
+            <div class="col"><i class="icon ion-calendar"></i><b> Day</b></div>
+            <div class="col"><i class="icon ion-clock"></i><b> Timings</b></div>
+        </div>
+        <div class="row" ng-repeat="item in labsList.WorkingHours | orderBy: 'Day'">
+          <div class="col">{{item.Day}}</div>
+          <div class="col">{{item.Timings}}</div>
+        </div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="item item-text-wrap">
+            <h3 style="text-decoration:underline;">Reservations for next week</h3>
+            <div class="row header">
+              <div class="col"><i class="icon ion-calendar"></i><b> Day</b></div>
+              <div class="col"><i class="icon ion-clock"></i><b> Timings</b></div>
+            </div>
+            <div class="row" ng-repeat="item in labsList.RFNW | orderBy:'Day'">
+              <div class="col">{{item.Day}} ({{item.Subject}}) </div>
+              <div class="col">{{item.Timings}}</div>
+            </div>
+          </div>
+        </div>
+        
+        
+        
+
+        
+    </div>
+    </div>
+  </ion-content>
+</ion-view>
